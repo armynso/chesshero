@@ -5,6 +5,8 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Forum from "./components/ForumMain";
+import CreateForumPage from "./components/ForumMain/CreateForumPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,7 +14,6 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
   return (
     <>
       <Navigation isLoaded={isLoaded} />
@@ -23,6 +24,15 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path='/play'>
+            { }
+          </Route>
+          <Route exact path='/forum'>
+            <Forum />
+          </Route>
+          <Route exact path='/createForum'>
+            <CreateForumPage />
           </Route>
         </Switch>
       )}
