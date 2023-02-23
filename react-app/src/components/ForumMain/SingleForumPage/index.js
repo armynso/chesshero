@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 // import { AddForumButton } from '..';
 import { getForums } from '../../../store/forum';
+import { getDiscourses, createDiscourse } from '../../../store/discourse';
 import EditForumPage from '../EditForumPage';
 import './forumSingle.css'
 
 export default function SingleForumPage() {
     const [thisForum, setThisForum] = useState()
     const [edited, setEdited] = useState(false)
+    const [comment, setComment] = useState('')
+    const [errors, setErrors] = useState([])
     const dispatch = useDispatch()
     const history = useHistory()
 
     const forums = Object.values(useSelector(state => state.forum))[0]
+    const discourses = Object.values(useSelector(state => state.discourse))[0]
+    console.log(discourses, 'discourses ?')
 
     const sessionUser = useSelector(state => state.session.user);
 
@@ -58,6 +63,22 @@ export default function SingleForumPage() {
         history.push('/forum/edit', { thisForum })
     }
 
+    const submit = async (e) => {
+        e.preventDefault()
+        const check = await dispatch(createDiscourse({ id: thisForum.id, post: comment }))
+            .then(() => dispatch(getDiscourses()))
+            .catch(async (_req, res) => {
+                if (res && res.errors) {
+                    setErrors(res.errors);
+                }
+            })
+        if (check) setComment('')
+    }
+
+    const allComments = () => {
+        
+    }
+
     return (
         <>
             <div className='forumGroupSingleForum'>
@@ -75,7 +96,22 @@ export default function SingleForumPage() {
                         <div className='timeSingleForum'>{edited ? 'Edited' : null} {thisForum ? longAgo(thisForum?.created_at || 0) : null}</div>
                         {sessionUser?.username == thisForum?.username ? <button onClick={() => editForum()}>Edit</button> : null}
                     </div>
-                    <p >{thisForum?.content}</p>
+                    <p>{thisForum?.content}</p>
+                    <hr classname='hrLine'></hr>
+                </div>
+                <div>
+                    <form onSubmit={submit}>
+                        <label className='commentLabel'>
+                            <div>Reply to this topic</div>
+                            <textarea
+                                type="text"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                required
+                            />
+                        </label>
+                        <button className="replyButton">Reply</button>
+                    </form>
                 </div>
             </div>
         </>

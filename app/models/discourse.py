@@ -30,6 +30,7 @@ class Discourse(db.Model):
             'post': self.post,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'username': self.user.to_dict()['username']
             # 'discourse': self.discourse,
             # 'by_user': self.user
         }
