@@ -24,7 +24,8 @@ def postForums():
         forum = Forum(
             user_id = current_user.id,
             header = form.data['header'],
-            content = form.data['content']
+            content = form.data['content'],
+            category = form.data['category']
         )
         db.session.add(forum)
         db.session.commit()

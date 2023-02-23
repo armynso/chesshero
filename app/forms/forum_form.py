@@ -6,3 +6,4 @@ from app.models import User
 class CreateForum(FlaskForm):
     header = StringField("header", validators=[DataRequired()])
     content = StringField("content", validators=[DataRequired()])
+    category = StringField("category", validators=[DataRequired()])

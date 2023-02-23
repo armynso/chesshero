@@ -13,6 +13,7 @@ class Forum(db.Model):
 
     header = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
+    category = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -27,6 +28,7 @@ class Forum(db.Model):
             'user_id': self.id,
             'header': self.header,
             'content': self.content,
+            'category': self.category,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             # 'discourse': self.discourse,

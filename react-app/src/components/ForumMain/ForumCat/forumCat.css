@@ -2,9 +2,8 @@
     text-align: center;
     /* border: 2px; */
     background: rgba(0, 0, 0, 0.6);
-    width: 1280px;
+    width: 1260px;
     margin: auto;
-    color: #cccccc;
 }
 
 .forumHeader {
@@ -15,6 +14,7 @@
     /* margin: auto; */
     /* padding-top: 30px; */
     margin-left: 36px;
+    /* width: 100%; */
 }
 
 .forumSingle {
@@ -37,6 +37,7 @@
     height: 36px;
     /* width: 166px; */
     margin-right: 36px;
+    width: 100%;
 }
 
 .forumSignIn {
@@ -49,6 +50,7 @@
     /* width: 166px; */
     margin-right: 36px;
     margin-top: 6px;
+    text-align: right;
 }
 
 .forumButton:hover {
@@ -56,25 +58,25 @@
     cursor: pointer;
 }
 
-.forumUpper {
+.forumUpperCat {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 18px;
+    /* width: 100%; */
 }
 
-.forumGroup table {
-    width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse;
+.makeFlexCat {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
 }
 
-.forumGroup td:first-child {
-    text-align: left;
-    padding-left: 48px;
-}
-
-.forumGroup thead tr {
-    background: rgba(0, 0, 0, 0.26);
-    height: 32px;
+.left-arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }

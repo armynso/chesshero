@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Forum from "./components/ForumMain";
 import CreateForumPage from "./components/ForumMain/CreateForumPage";
+import ForumCategory from "./components/ForumMain/ForumCat";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,10 +29,13 @@ function App() {
           <Route exact path='/play'>
             { }
           </Route>
-          <Route exact path='/forum'>
+          <Route exact path='/forum/'>
             <Forum />
           </Route>
-          <Route exact path='/createForum'>
+          <Route exact path='/forum/:category'>
+            <ForumCategory />
+          </Route>
+          <Route exact path='/forum/:category/createForum'>
             <CreateForumPage />
           </Route>
         </Switch>

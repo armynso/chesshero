@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { createForum, getForums } from '../../../store/forum';
 import './createforum.css'
 
@@ -12,12 +12,14 @@ export default function CreateForumPage() {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const { category } = useParams()
+
     const submit = async (e) => {
         // console.log(e, 'e')
         e.preventDefault()
 
         setErrors([]);
-        const check = await dispatch(createForum({ header, content }))
+        const check = await dispatch(createForum({ header, content, category }))
             .then(() => dispatch(getForums()))
             .catch(async (_req, res) => {
                 if (res && res.errors) {
