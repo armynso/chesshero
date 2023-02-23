@@ -66,7 +66,7 @@ export default function Forum() {
                         <tr>
                             <td>
                                 <h2>
-                                    <NavLink exact to='/forum/general-chess-discussion' activeClassName='active' style={{ color: '#3692e7' }}>General Chess Discussion</NavLink>
+                                    <NavLink exact to='/forum/general-chess-discussion' style={{ color: '#3692e7', textDecoration: 'none' }}>General Chess Discussion</NavLink>
                                 </h2>
                                 <p>The place to discuss general chess topics</p>
                             </td>
@@ -83,7 +83,7 @@ export default function Forum() {
                         <tr>
                             <td>
                                 <h2>
-                                    <NavLink exact to='/forum/chesshero-feedback' activeClassName='active' style={{ color: '#3692e7' }}>Chesshero Feedback</NavLink>
+                                    <NavLink exact to='/forum/chesshero-feedback' activeClassName='active' style={{ color: '#3692e7', textDecoration: 'none' }}>Chesshero Feedback</NavLink>
 
                                 </h2>
                                 <p>Bug reports, feature requests, suggestions</p>
@@ -101,7 +101,7 @@ export default function Forum() {
                         <tr>
                             <td>
                                 <h2>
-                                    <NavLink exact to='/forum/game-analysis' activeClassName='active' style={{ color: '#3692e7' }}>Game analysis</NavLink>
+                                    <NavLink exact to='/forum/game-analysis' activeClassName='active' style={{ color: '#3692e7', textDecoration: 'none' }}>Game analysis</NavLink>
 
 
                                 </h2>
@@ -120,7 +120,7 @@ export default function Forum() {
                         <tr>
                             <td>
                                 <h2>
-                                    <NavLink exact to='/forum/off-topic-discussion' activeClassName='active' style={{ color: '#3692e7' }}>Off-Topic Discussion</NavLink>
+                                    <NavLink exact to='/forum/off-topic-discussion' activeClassName='active' style={{ color: '#3692e7', textDecoration: 'none' }}>Off-Topic Discussion</NavLink>
                                 </h2>
                                 <p>Everything that isn't related to chess</p>
                             </td>

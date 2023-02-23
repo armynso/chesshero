@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
-import { createForum, getForums } from '../../../store/forum';
-import './createforum.css'
+import { NavLink, useHistory, useLocation, useParams } from 'react-router-dom';
+import { createForum, editForum, getForums } from '../../../store/forum';
+import './editforum.css'
 
-export default function CreateForumPage() {
-    const [header, setHeader] = useState("")
-    const [content, setContent] = useState("")
+export default function EditForumPage() {
     const [errors, setErrors] = useState([])
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch()
     const history = useHistory()
+    const location = useLocation()
 
-    const { category } = useParams()
+    // console.log(location, 'this is location')
+    // console.log(location.state)
+
+    const { id: oldId, category: oldCategory, content: oldContent, header: oldHeader } = location.state.thisForum
+    console.log(oldId, oldContent, oldCategory, oldHeader)
+
+    const [header, setHeader] = useState(oldHeader)
+    const [content, setContent] = useState(oldContent)
+
+    // const { category } = useParams()
+
+    const onChange = e => {
+        const input = e.currentTarget.value;
+        if (/^[^!-\/:-@\[-`{-~]+$/.test(input) || input === "") {
+            setHeader(input);
+        }
+    }
 
     const submit = async (e) => {
         // console.log(e, 'e')
         e.preventDefault()
 
         setErrors([]);
-        const check = await dispatch(createForum({ header, content, category }))
+        const check = await dispatch(editForum({ header, content, category: oldCategory, id: oldId }))
             .then(() => dispatch(getForums()))
             .catch(async (_req, res) => {
                 if (res && res.errors) {
@@ -29,25 +44,19 @@ export default function CreateForumPage() {
 
             })
         // console.log('history dot push?')
-        if (check) return history.push(`/forum/${category}`);
+        if (check) return history.push(`/forum/${oldCategory}/${header}`);
     }
 
     useEffect(() => {
         const errs = []
-
     }, [header, content, setValidationErrors])
 
-    const onChange = e => {
-        const input = e.currentTarget.value;
-        if (/^[^!-\/:-@\[-`{-~]+$/.test(input) || input === "") {
-            setHeader(input);
-        }
-    }
     const maxLength = 52
+    console.log(header, 'what is header')
     return (
         <>
             <div className='create-form-main'>
-                <h1>Create Your Chess Discussion </h1>
+                <h1>Edit Your Chess Discussion </h1>
                 <form onSubmit={submit} >
                     <ul>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -64,6 +73,7 @@ export default function CreateForumPage() {
                             type="text"
                             value={header}
                             onChange={onChange}
+                            // placeholder={oldHeader}
                             maxLength='52'
                             required
                         />
@@ -76,6 +86,7 @@ export default function CreateForumPage() {
                             type="text"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
+                            // placeholder={oldContent}
                             required
                         />
                     </label>

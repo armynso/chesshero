@@ -43,12 +43,31 @@ export const createForum = (f) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(setForum(f))
+        dispatch(setForum(data))
         return 'success'
     }
 
     const data = await response.json()
     return data.errors || 'Error on createForum'
+}
+
+export const editForum = (f) => async (dispatch) => {
+    const response = await fetch(`/api/forums/editForum/${f.id}`, {
+        method: 'PUT',
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify(f)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setForum(data))
+        return 'success'
+    }
+
+    const data = await response.json()
+    return data.errors || 'Error on editForum'
 }
 
 const initialState = { forums: null };

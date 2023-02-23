@@ -11,7 +11,7 @@ class Forum(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    header = db.Column(db.String, nullable=False)
+    header = db.Column(db.String, nullable=False, unique=True)
     content = db.Column(db.String, nullable=False)
     category = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
@@ -31,6 +31,7 @@ class Forum(db.Model):
             'category': self.category,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'username': self.user.to_dict()['username']
             # 'discourse': self.discourse,
             # 'by_user': self.user
         }

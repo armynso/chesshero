@@ -9,6 +9,17 @@ forum_routes = Blueprint('forums', __name__)
 #a forum has many posts, only a post is correspond to a forum, thus creating a 1 to 1 relationship.
 #forum to user has one to many relationships, a user can have multiple forums
 
+
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
 @forum_routes.route('/')
 def forums():
     forums = Forum.query.all()
@@ -32,7 +43,25 @@ def postForums():
 
         return forum.to_dict(), 200
 
-    return {'error': 'Create a new forum submission failed'}
+    return {'error': validation_errors_to_error_messages(form.errors)}, 401
+
+@forum_routes.route('/editForum/<int:id>', methods=['PUT'])
+@login_required
+def editForums(id):
+    form = CreateForum()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    oldForum = Forum.query.get(id)
+
+    if form.validate_on_submit():
+        oldForum.header = form.data['header']
+        oldForum.content = form.data['content']
+
+        db.session.commit()
+
+        return oldForum.to_dict(), 200
+
+    return {'error': validation_errors_to_error_messages(form.errors) or 'Edit Form Failed'}, 401
 
 
 @forum_routes.route('/<int:forum_id>')

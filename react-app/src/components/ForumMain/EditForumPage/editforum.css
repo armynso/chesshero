@@ -1,0 +1,77 @@
+.create-form-main {
+    /* text-align: center; */
+    /* border: 2px; */
+    background: rgba(0, 0, 0, 0.6);
+    width: 1060px;
+    margin: auto;
+    color: #ccc;
+}
+
+.create-form-main>h1 {
+    text-align: center;
+
+    font-weight: 200;
+    /* margin-left: 36px; */
+    /* align-items: center; */
+    padding: 36px;
+}
+
+.create-form-main>form {
+    display: flex;
+    flex-direction: column;
+}
+
+.forum-label {
+    display: flex;
+    flex-direction: column;
+    width: 970px;
+    /* text-align: center; */
+    margin: auto;
+    padding: 12px;
+}
+
+.forum-label>input {
+    height: 34px;
+}
+
+.forum-label>input,
+textarea {
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ccc;
+    border-style: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.forum-label>textarea {
+    resize: none;
+    height: 200px;
+}
+
+.forum-label>input:focus,
+textarea:focus {
+    background: rgba(255, 255, 255, 0.09);
+    /* border-style: none; */
+    outline: solid;
+}
+
+.submit-forum {
+    text-align: center;
+    width: 120px;
+    margin-left: auto;
+    margin-right: 20px;
+    margin-bottom: 12px;
+    background: #3692e7;
+    padding: 0.8em 1em;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    font-weight: 600;
+    font-size: 16px;
+    /* align-items: right; */
+}
+
+.create-form-main>button {
+    color: #ccc;
+}

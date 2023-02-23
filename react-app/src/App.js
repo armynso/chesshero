@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import Forum from "./components/ForumMain";
 import CreateForumPage from "./components/ForumMain/CreateForumPage";
 import ForumCategory from "./components/ForumMain/ForumCat";
+import SingleForumPage from "./components/ForumMain/SingleForumPage";
+import EditForumPage from "./components/ForumMain/EditForumPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,11 +34,17 @@ function App() {
           <Route exact path='/forum/'>
             <Forum />
           </Route>
+          <Route exact path='/forum/edit'>
+            <EditForumPage />
+          </Route>
           <Route exact path='/forum/:category'>
             <ForumCategory />
           </Route>
           <Route exact path='/forum/:category/createForum'>
             <CreateForumPage />
+          </Route>
+          <Route exact path='/forum/:category/:header'>
+            <SingleForumPage />
           </Route>
         </Switch>
       )}

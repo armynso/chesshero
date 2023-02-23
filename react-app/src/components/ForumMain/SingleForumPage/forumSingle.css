@@ -1,0 +1,128 @@
+.forumGroupSingleForum {
+    text-align: center;
+    /* border: 2px; */
+    background: rgba(0, 0, 0, 0.6);
+    width: 1000px;
+    margin: auto;
+    color: #ccc;
+}
+
+.forumHeader {
+    text-align: center;
+    color: #ccc;
+    font-weight: 200;
+    /* height: 55px; */
+    /* margin: auto; */
+    /* padding-top: 30px; */
+    margin-left: 36px;
+    /* width: 100%; */
+}
+
+.forumSingle {
+    color: #57aeff;
+    padding: 16px;
+    /* text-align: left; */
+    height: 36px;
+}
+
+.forumSingle:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.forumButton {
+    color: #629924;
+    font-weight: 600;
+    background: none;
+    /* color: inherit; */
+    border: none;
+    height: 36px;
+    /* width: 166px; */
+    margin-right: 36px;
+    width: 100%;
+}
+
+.forumSignIn {
+    color: #629924;
+    font-weight: 600;
+    background: none;
+    /* color: inherit; */
+    border: none;
+    height: 36px;
+    /* width: 166px; */
+    margin-right: 36px;
+    margin-top: 6px;
+    text-align: right;
+}
+
+.forumButton:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.forumUpperCat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    /* width: 100%; */
+}
+
+.makeFlexCat {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.left-arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.comment {
+    width: 80%;
+    margin: 0 auto 16px;
+    /* margin-bottom: 26px; */
+    padding-bottom: 16px;
+}
+
+.usernameSingleForum {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.usernameHeaderSingle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.usernameHeaderSingle button {
+    margin-left: auto;
+    border: none;
+    background: none;
+    color: #ccc;
+    font-weight: 600;
+    font-size: 16px;
+    width: 64px;
+    height: 36px;
+    border-radius: 4px;
+}
+
+.usernameHeaderSingle button:hover {
+    cursor: pointer;
+    color: #57aeff;
+    background: rgba(0, 0, 0, 0.12);
+
+}
+
+.timeSingleForum {
+    margin-left: 12px;
+}
+
+.comment p {
+    text-align: justify;
+}

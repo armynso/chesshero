@@ -25,11 +25,15 @@ export default function ForumCategory() {
     console.log(forums, 'this si forum')
     //blank replies last post
     const forumList = forums?.filter(x => x.category == category).map(forum => {
+        // console.log(forum.header, 'actual headre')
+        console.log(encodeURIComponent(forum.header), 'test encode')
         return (
-            <div key={forum?.id} className='forumSingle'>
-                <div>{forum?.header}</div>
-                {/* <div>{forum?.content}</div> */}
-            </div>
+            <NavLink to={`/forum/${category}/${encodeURI(forum.header)}`} style={{ textDecoration: 'none' }}>
+                <div key={forum?.id} className='forumSingle'>
+                    <div>{forum?.header}</div>
+                    {/* <div>{forum?.content}</div> */}
+                </div>
+            </NavLink>
         )
     })
     return (
