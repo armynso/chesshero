@@ -39,3 +39,18 @@ def postDiscourses(id):
         return discourse.to_dict(), 200
 
     return {'error': validation_errors_to_error_messages(form.errors)}, 401
+
+@discourse_routes.route('/deleteDiscourse/<int:id>', methods=['DELETE'])
+@login_required
+def deleteDiscourses(id):
+    thisDiscourse = Discourse.query.get(id)
+
+    if not thisDiscourse:
+        return {'Error': 'Discourse not Found'}, 404
+    if current_user.id != thisDiscourse.user_id:
+        return {"Error": "Forbidden"}, 403
+
+    db.session.delete(thisDiscourse)
+    db.session.commit()
+
+    return {'Message': 'The discourse has been deleted!'}, 200

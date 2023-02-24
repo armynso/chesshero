@@ -9,7 +9,7 @@ class Discourse(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     post = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
@@ -26,11 +26,11 @@ class Discourse(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.id,
+            'user_id': self.user_id,
             'post': self.post,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'username': self.user.to_dict()['username']
-            # 'discourse': self.discourse,
+            'username': self.user.to_dict()['username'],
+            'forumId': self.forum_id
             # 'by_user': self.user
         }

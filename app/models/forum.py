@@ -9,7 +9,7 @@ class Forum(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     header = db.Column(db.String, nullable=False, unique=True)
     content = db.Column(db.String, nullable=False)

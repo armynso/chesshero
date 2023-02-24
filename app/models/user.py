@@ -33,5 +33,5 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'forums': self.discourses
+            'discourses': len(self.discourses)
         }

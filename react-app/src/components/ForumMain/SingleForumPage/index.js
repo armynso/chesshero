@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 // import { AddForumButton } from '..';
 import { getForums } from '../../../store/forum';
-import { getDiscourses, createDiscourse } from '../../../store/discourse';
+import { getDiscourses, createDiscourse, deleteDiscourse } from '../../../store/discourse';
 import EditForumPage from '../EditForumPage';
 import './forumSingle.css'
 
@@ -37,30 +37,52 @@ export default function SingleForumPage() {
             { label: 'second', seconds: 1 }
         ];
         let seconds = Math.floor((Date.now() - Date.parse(time)) / 1000)
-        // console.log(time, thisForum?.updated_at)
+        console.log(time, thisForum?.updated_at, 'lets see')
         if (edited) {
             seconds = Math.floor((Date.now() - Date.parse(thisForum?.updated_at)) / 1000)
         }
-        // console.log(seconds, 'seconds', Date.now(), Date.parse(time))
+        console.log(seconds, 'seconds', Date.now(), Date.parse(time))
+        if (seconds <= 1) return '0 second ago'
         const interval = intervals.find(i => i.seconds < seconds);
         const count = Math.floor(seconds / interval.seconds);
         return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
     }
+    console.log(discourses, thisForum, 'import')
+    const allComments = Array.isArray(discourses) ? discourses.filter(comment => comment.forumId == thisForum?.id).map(comment => {
+        return (
+            <div className='comment'>
+                <div className='usernameHeaderSingle'>
+                    <div className='usernameSingleForum'>{comment?.username}</div>
+                    {/* <div className='timeSingleForum'>{edited ? 'Edited' : null} {thisForum ? longAgo(thisForum?.created_at || 0) : null}</div> */}
+                    {sessionUser?.username == comment?.username ? <button onClick={() => deleteComment(comment.id)}>Delete</button> : null}
+                </div>
+                <p>{comment?.post}</p>
+                <hr classname='hrLine'></hr>
+            </div>
+        )
+    }) : null;
 
     useEffect(() => {
-        if (!forums) {
+        if (!Array.isArray(forums)) {
             dispatch(getForums())
         }
-        console.log(decodeURI(header), 'test header')
+        if (!Array.isArray(discourses)) {
+            dispatch(getDiscourses())
+        }
+        // console.log(decodeURI(header), 'test header')
         setThisForum(forums?.find(x => x.header == decodeURI(header)))
-        console.log(thisForum, 'this forum')
+        // console.log(thisForum, 'this forum')
         if (thisForum?.created_at != thisForum?.updated_at) {
             setEdited(true)
         }
-    }, [dispatch, forums, thisForum, edited])
+    }, [dispatch, forums, thisForum, edited, discourses])
 
     const editForum = (e) => {
         history.push('/forum/edit', { thisForum })
+    }
+
+    const deleteComment = async (id) => {
+        dispatch(deleteDiscourse({ id }))
     }
 
     const submit = async (e) => {
@@ -73,10 +95,6 @@ export default function SingleForumPage() {
                 }
             })
         if (check) setComment('')
-    }
-
-    const allComments = () => {
-        
     }
 
     return (
@@ -93,12 +111,13 @@ export default function SingleForumPage() {
                 <div className='comment'>
                     <div className='usernameHeaderSingle'>
                         <div className='usernameSingleForum'>{thisForum?.username}</div>
-                        <div className='timeSingleForum'>{edited ? 'Edited' : null} {thisForum ? longAgo(thisForum?.created_at || 0) : null}</div>
+                        <div className='timeSingleForum'>{edited ? 'Edited' : null} {!!thisForum ? longAgo(thisForum?.created_at || 0) : null}</div>
                         {sessionUser?.username == thisForum?.username ? <button onClick={() => editForum()}>Edit</button> : null}
                     </div>
                     <p>{thisForum?.content}</p>
                     <hr classname='hrLine'></hr>
                 </div>
+                {allComments}
                 <div>
                     <form onSubmit={submit}>
                         <label className='commentLabel'>
