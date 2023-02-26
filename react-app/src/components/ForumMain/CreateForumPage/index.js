@@ -21,14 +21,18 @@ export default function CreateForumPage() {
         setErrors([]);
         const check = await dispatch(createForum({ header, content, category }))
             .then(() => dispatch(getForums()))
-            .catch(async (_req, res) => {
-                if (res && res.errors) {
-                    // console.log('something here??')
-                    setErrors(res.errors);
-                }
+            .catch(async (res) => {
+                // console.log(res, 'this is res 25')
+                setErrors(res)
+                // console.log(errors, 'errors')
+                // if (res && res.errors) {
+                //     console.log('something here??', res)
+                //     setErrors(res.errors);
+                // }
 
             })
         // console.log('history dot push?')
+        console.log(check, 'checky')
         if (check) return history.push(`/forum/${category}`);
     }
 

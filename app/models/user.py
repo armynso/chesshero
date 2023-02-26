@@ -17,6 +17,8 @@ class User(db.Model, UserMixin):
     forums = db.relationship("Forum", back_populates="user")
     discourses = db.relationship("Discourse", back_populates="user")
 
+    matches = db.relationship("Match", back_populates="user")
+
     @property
     def password(self):
         return self.hashed_password

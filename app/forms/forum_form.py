@@ -7,7 +7,7 @@ def header_exists(form, field):
     header = field.data
     forum = Forum.query.filter(Forum.header == header).first()
     if forum:
-        raise ValidationError('This subject has already been created by another user.')
+        raise ValidationError('The subject with this name has already been created within this site.')
 
 class CreateForum(FlaskForm):
     header = StringField("header", validators=[DataRequired(), header_exists])

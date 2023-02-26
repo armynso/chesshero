@@ -43,7 +43,7 @@ def postForums():
 
         return forum.to_dict(), 200
 
-    return {'error': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)  or 'Create Form Failed'}, 400
 
 @forum_routes.route('/editForum/<int:id>', methods=['PUT'])
 @login_required
@@ -61,7 +61,7 @@ def editForums(id):
 
         return oldForum.to_dict(), 200
 
-    return {'error': validation_errors_to_error_messages(form.errors) or 'Edit Form Failed'}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors) or 'Edit Form Failed'}, 400
 
 
 @forum_routes.route('/<int:forum_id>')

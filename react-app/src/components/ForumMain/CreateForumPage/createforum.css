@@ -75,3 +75,7 @@ textarea:focus {
 .create-form-main>button {
     color: #ccc;
 }
+
+.create-form-main li {
+    list-style: none;
+}

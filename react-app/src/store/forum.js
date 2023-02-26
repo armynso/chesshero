@@ -40,15 +40,20 @@ export const createForum = (f) => async (dispatch) => {
         },
         body: JSON.stringify(f)
     });
+    // console.log('create forum here 132')
+    // console.log(response, 'WHAT')
 
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
         dispatch(setForum(data))
+        console.log(response, data, 'res and data')
         return 'success'
     }
-
-    const data = await response.json()
-    return data.errors || 'Error on createForum'
+    console.log(data, 'what is data')
+    throw data.errors
+    // const data = await response.json()
+    // console.log(response, data, 'res and data error')
+    // return data.errors || 'Error on createForum'
 }
 
 export const editForum = (f) => async (dispatch) => {
@@ -60,14 +65,14 @@ export const editForum = (f) => async (dispatch) => {
         body: JSON.stringify(f)
     });
 
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
         dispatch(setForum(data))
         return 'success'
     }
-
-    const data = await response.json()
-    return data.errors || 'Error on editForum'
+    throw data.errors
+    // const data = await response.json()
+    // return data.errors || 'Error on editForum'
 }
 
 const initialState = { forums: null };

@@ -36,11 +36,10 @@ export default function EditForumPage() {
         setErrors([]);
         const check = await dispatch(editForum({ header, content, category: oldCategory, id: oldId }))
             .then(() => dispatch(getForums()))
-            .catch(async (_req, res) => {
-                if (res && res.errors) {
-                    // console.log('something here??')
-                    setErrors(res.errors);
-                }
+            .catch(async (res) => {
+                // console.log(res, 'this is res 24')
+                setErrors(res)
+                // console.log(errors, 'errors')
 
             })
         // console.log('history dot push?')
