@@ -1,7 +1,40 @@
 .profile-dropdown {
   position: absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  line-height: 25px;
+  right: 2.4%;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  list-style: none;
+  margin-top: 10px;
+  z-index: 5;
+  /* background: rgba(0, 0, 0, 0.6); */
 }
 
 .hidden {
   display: none;
+}
+
+.mainNav li {
+  list-style: none;
+}
+
+.mainNav {
+  display: flex;
+  column-gap: 28px;
+  margin-bottom: 38px;
+}
+
+.userButtonNav {
+  /* margin-left: auto;
+  right: 36px; */
+  margin-right: 26px;
+  /* align-items: center; */
+  margin-left: auto;
+}
+
+.navLogo {
+  color: #ccc;
+  font-weight: 600;
 }

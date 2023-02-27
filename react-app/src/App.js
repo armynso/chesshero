@@ -10,6 +10,7 @@ import CreateForumPage from "./components/ForumMain/CreateForumPage";
 import ForumCategory from "./components/ForumMain/ForumCat";
 import SingleForumPage from "./components/ForumMain/SingleForumPage";
 import EditForumPage from "./components/ForumMain/EditForumPage";
+import Lobby from "./components/Lobby";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +29,8 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path='/play'>
-            { }
+          <Route exact path='/'>
+            <Lobby />
           </Route>
           <Route exact path='/forum/'>
             <Forum />

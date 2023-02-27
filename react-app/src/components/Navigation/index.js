@@ -8,24 +8,24 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul>
+		<ul className='mainNav'>
 			<li>
-				<NavLink exact to="/" activeClassName='active' activeStyle={{ color: 'yellow' }} style={{ color: 'white' }}>
-					Home
-				</NavLink>
+				<div className='navLogo'>
+					Chesshero.org
+				</div>
 			</li>
 			<li>
-				<NavLink exact to='/play' activeClassName='active' activeStyle={{ color: 'yellow' }} style={{ color: 'white' }}>
+				<NavLink exact to='/' activeClassName='active' activeStyle={{ color: 'yellow' }} style={{ color: 'white', textDecoration: 'none' }}>
 					Play
 				</NavLink>
 			</li>
 			<li>
-				<NavLink exact to='/forum' activeClassName='active' activeStyle={{ color: 'yellow' }} style={{ color: 'white' }}>
+				<NavLink exact to='/forum' activeClassName='active' activeStyle={{ color: 'yellow' }} style={{ color: 'white', textDecoration: 'none' }}>
 					Forum
 				</NavLink>
 			</li>
 			{isLoaded && (
-				<li>
+				<li className='userButtonNav'>
 					<ProfileButton user={sessionUser} />
 				</li>
 			)}

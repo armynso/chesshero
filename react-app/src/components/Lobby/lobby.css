@@ -1,0 +1,38 @@
+.lobbyTable {
+    text-align: center;
+    /* border: 2px; */
+    background: rgba(0, 0, 0, 0.6);
+    width: 980px;
+    /* height: 540px; */
+    min-height: 540px;
+    margin: auto;
+    color: #cccccc;
+}
+
+.lobbyTable thead tr {
+    background: rgba(0, 0, 0, 0.26);
+    height: 48px;
+}
+
+.lobbyTable tbody tr {
+    height: 32px;
+}
+
+.lobbyTable table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.lobbyTable th:first-child {
+    width: 400px;
+}
+
+.pairLobby {
+    cursor: pointer;
+}
+
+.pairLobby:hover {
+    background: rgba(255, 102, 0, 0.42);
+}
