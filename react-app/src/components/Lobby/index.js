@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
+import CreateGameModal from './createGame';
 // import { createForum, getForums } from '../../../store/forum';
 import './lobby.css'
 
 export default function Lobby() {
     const [header, setHeader] = useState("")
     const [content, setContent] = useState("")
-    const [errors, setErrors] = useState([])
-    const [validationErrors, setValidationErrors] = useState([]);
-    const dispatch = useDispatch()
-    const history = useHistory()
+    // const [errors, setErrors] = useState([])
+    // const [validationErrors, setValidationErrors] = useState([]);
+    // const dispatch = useDispatch()
+    // const history = useHistory()
 
 
 
     useEffect(() => {
-        const errs = []
+        // const errs = []
 
-    }, [header, content, setValidationErrors])
-
+    }, [])
 
     return (
         <>
-            <div>
-                Lobby
+            <div className='createGameButton'>
+                <OpenModalButton
+                    buttonText="CREATE A GAME"
+                    modalComponent={<CreateGameModal />}
+                />
             </div>
             <div className='lobbyTable'>
 

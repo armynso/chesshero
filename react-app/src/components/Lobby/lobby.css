@@ -1,3 +1,25 @@
+.createGameButton {
+    margin: auto;
+    position: relative;
+    margin-bottom: 40px;
+    width: 161px;
+}
+
+.createGameButton button {
+    font-size: 17px;
+    /* text-align: center; */
+    padding: 9px;
+    color: #b0b0b0;
+    background: rgba(0, 0, 0, 0.28);
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.createGameButton button:hover {
+    background: rgba(0, 0, 0, 0.46);
+}
+
 .lobbyTable {
     text-align: center;
     /* border: 2px; */

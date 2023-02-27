@@ -1,0 +1,120 @@
+.createGameModal {
+    height: 260px;
+    width: 300px;
+
+}
+
+.createGameHeader {
+    text-align: center;
+}
+
+.sliderInCreateGame {
+    display: grid;
+    /* align-items: center; */
+    text-align: center;
+}
+
+.sliderInCreateGame input {
+    width: 240px;
+    margin: auto;
+}
+
+/* .ratedCasual {
+    margin-bottom: 12px;
+    margin-top: 4px;
+    text-align: center;
+} */
+
+
+
+.switch {
+    position: relative;
+    display: flex;
+    width: 60px;
+    height: 34px;
+    margin: auto;
+    margin-top: 12px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: -30px;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(72, 221, 52);
+    -webkit-transition: .2s;
+    transition: .2s;
+    width: 120px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "Casual";
+    font-weight: 600;
+    text-align: center;
+    font-size: 14px;
+    align-content: center;
+    vertical-align: middle;
+    /* height: 26px; */
+    height: 26px;
+    /* width: 26px; */
+    width: 53px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    background-color: aquamarine;
+}
+
+input:checked+.slider:before {
+    content: 'Rated';
+    /* background-color: #2196F3; */
+}
+
+input:checked+.slider {
+    /* background-color: #62ff50; */
+    background-color: #2196F3;
+
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(58px);
+    -ms-transform: translateX(58px);
+    transform: translateX(58px);
+}
+
+.submitChessPieces {
+    margin: auto;
+    margin-top: 16px;
+    /* right: auto; */
+    width: fit-content;
+    display: flex;
+    column-gap: 20px;
+}
+
+.submitChessPieces>button {
+    border: none;
+    cursor: pointer;
+}
+
+.submitChessPieces>button:hover {
+    box-shadow: 2px 5px 0 rgb(0 0 0 / 23%);
+}
+
+.Bk {
+    /* transform: scale(1.4); */
+}
