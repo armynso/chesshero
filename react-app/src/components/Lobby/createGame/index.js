@@ -7,6 +7,7 @@ import './createGame.css'
 import { ReactComponent as Bk } from './assets/bK.svg'
 import { ReactComponent as WBk } from './assets/wbK.svg'
 import { ReactComponent as Wk } from './assets/wK.svg'
+import { createMatch } from '../../../store/match';
 
 export default function CreateGameModal() {
     const [header, setHeader] = useState("")
@@ -16,8 +17,14 @@ export default function CreateGameModal() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [minutes, setMinutes] = useState(3)
-    const [increment, setIncrement] = useState(3)
+    const sessionUser = useSelector(state => state.session.user);
+    // const seekers = useSelector(state => state.matches);
+
+    const [check, setCheck] = useState(false)
+
+    const [minutes, setMinutes] = useState('3')
+    const [increment, setIncrement] = useState('3')
+    const [mode, setMode] = useState('Casual')
 
     useEffect(() => {
         const errs = []
@@ -53,8 +60,20 @@ export default function CreateGameModal() {
     //     return 'Boss'
     // }
 
-    const temp = () => {
-        console.log('test')
+    // const temp = () => {
+    //     console.log('test')
+    // }
+
+    // player1Username = form.data['player1Username'],
+    // player1Color = form.data['player1Color'],
+    // time = form.data['time'],
+    // increment = form.data['increment'],
+    // rated = form.data['rated']
+
+    const createGame = (color) => {
+        console.log(outputMinutes, increment, check, mode, 'before submit')
+        console.log(sessionUser.username, color)
+        dispatch(createMatch({ player1Username: sessionUser.username, player1Color: color, time: outputMinutes, increment, rated: check }))
     }
 
     return (
@@ -98,26 +117,32 @@ export default function CreateGameModal() {
                 </div> */}
                 {/* <div className='ratedCasual'></div> */}
                 <label class="switch">
-                    <input type="checkbox" />
+                    <input type="checkbox"
+                        onChange={() => {
+                            setCheck(!check)
+                            if (!check) setMode('Rated')
+                            else setMode('Casual')
+                        }}
+                    />
                     <span class="slider">
 
                     </span>
                 </label>
                 <div className='submitChessPieces'>
 
-                    <button onClick={() => temp()}>
+                    <button onClick={() => createGame('black')}>
                         <Bk
                             className='Bk'
 
                         />
                     </button>
-                    <button onClick={() => temp()}>
+                    <button onClick={() => createGame('random')}>
                         <WBk
                             className='Bk'
 
                         />
                     </button>
-                    <button>
+                    <button onClick={() => createGame('white')}>
                         <Wk
                             className='Bk'
                         />

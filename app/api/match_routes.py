@@ -44,3 +44,18 @@ def createMatch():
         return match.to_dict(), 200
 
     return {'errors': form.errors  or 'Create Form Failed'}, 400
+
+@match_routes.route('/deleteMatch/<int:id>', methods=['DELETE'])
+@login_required
+def deleteMatch(id):
+    thisMatch = Match.query.get(id)
+
+    if not thisMatch:
+        return {'Error': 'Match not Found'}, 404
+    if current_user.id != thisMatch.user_id:
+        return {"Error": "Forbidden"}, 403
+
+    db.session.delete(thisMatch)
+    db.session.commit()
+
+    return {'Message': 'The Match has been deleted!'}, 200

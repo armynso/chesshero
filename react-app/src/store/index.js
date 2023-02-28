@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import forum from './forum'
 import discourse from './discourse'
+import match from './match'
 
 const rootReducer = combineReducers({
   session,
   forum,
-  discourse
+  discourse,
+  match
 });
 
 

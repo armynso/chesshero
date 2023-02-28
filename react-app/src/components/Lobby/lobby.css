@@ -20,6 +20,13 @@
     background: rgba(0, 0, 0, 0.46);
 }
 
+.waiting {
+    color: #ccc;
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+
 .lobbyTable {
     text-align: center;
     /* border: 2px; */
@@ -53,6 +60,10 @@
 
 .pairLobby {
     cursor: pointer;
+}
+
+.goGreen {
+    background-color: rgba(52, 171, 0, 0.42);
 }
 
 .pairLobby:hover {

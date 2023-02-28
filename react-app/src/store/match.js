@@ -33,7 +33,7 @@ export const getMatches = () => async (dispatch) => {
 }
 
 export const createMatch = (f) => async (dispatch) => {
-    console.log('this is createforum f, ', f)
+    console.log('this is creatematch f, ', f)
     const response = await fetch(`/api/matches/createMatch`, {
         method: 'POST',
         headers: {
@@ -49,20 +49,21 @@ export const createMatch = (f) => async (dispatch) => {
     }
 
     const data = await response.json()
-    return data.errors || 'Error on createForum'
+    console.log(data, 'see this')
+    return data.errors || 'Error on creatMatch'
 }
 
-// export const deleteDiscourse = (f) => async (dispatch) => {
-//     const res = await fetch(`/api/discourses/deleteDiscourse/${f.id}`, {
-//         method: "DELETE"
-//     });
+export const deleteMatch = (f) => async (dispatch) => {
+    const res = await fetch(`/api/matches/deleteMatch/${f.id}`, {
+        method: "DELETE"
+    });
 
-//     if (res.ok) {
-//         const data = await res.json();
-//         dispatch(removeDiscourse(f.id))
-//         return data
-//     }
-// }
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(removeMatch(f.id))
+        return data
+    }
+}
 
 const initialState = { matches: null };
 

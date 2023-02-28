@@ -37,11 +37,11 @@ export default function SingleForumPage() {
             { label: 'second', seconds: 1 }
         ];
         let seconds = Math.floor((Date.now() - Date.parse(time)) / 1000)
-        console.log(time, thisForum?.updated_at, 'lets see')
+        // console.log(time, thisForum?.updated_at, 'lets see')
         if (edited) {
             seconds = Math.floor((Date.now() - Date.parse(thisForum?.updated_at)) / 1000)
         }
-        console.log(seconds, 'seconds', Date.now(), Date.parse(time))
+        // console.log(seconds, 'seconds', Date.now(), Date.parse(time))
         if (seconds <= 1) return '0 second ago'
         const interval = intervals.find(i => i.seconds < seconds);
         const count = Math.floor(seconds / interval.seconds);

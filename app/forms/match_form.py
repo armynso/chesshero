@@ -8,4 +8,4 @@ class CreateMatch(FlaskForm):
     player1Color = StringField("player1Color", validators=[DataRequired()])
     time = StringField("time", validators=[DataRequired()])
     increment = StringField("increment", validators=[DataRequired()])
-    rated = BooleanField("post", validators=[DataRequired()])
+    rated = BooleanField("rated")
