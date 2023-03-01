@@ -17,7 +17,7 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } else {
-        closeModal()
+      closeModal()
     }
   };
 
@@ -48,7 +48,16 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+
+        <div className="login-buttons">
+          <button type="submit">Log In</button>
+          <button onClick={() => (
+            setEmail('demo@aa.io'),
+            setPassword('password')
+          )
+          }>Demo User</button>
+        </div>
+
       </form>
     </>
   );

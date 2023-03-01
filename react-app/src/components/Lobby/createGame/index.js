@@ -8,6 +8,10 @@ import { ReactComponent as Bk } from './assets/bK.svg'
 import { ReactComponent as WBk } from './assets/wbK.svg'
 import { ReactComponent as Wk } from './assets/wK.svg'
 import { createMatch } from '../../../store/match';
+import { useModal } from '../../../context/Modal';
+import { io } from 'socket.io-client';
+
+let socket;
 
 export default function CreateGameModal() {
     const [header, setHeader] = useState("")
@@ -16,6 +20,7 @@ export default function CreateGameModal() {
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch()
     const history = useHistory()
+    const { closeModal } = useModal()
 
     const sessionUser = useSelector(state => state.session.user);
     // const seekers = useSelector(state => state.matches);
@@ -28,6 +33,18 @@ export default function CreateGameModal() {
 
     useEffect(() => {
         const errs = []
+
+        socket = io();
+
+        // socket.on("chat", (chat) => {
+        //     setMessages(messages => [...messages, chat])
+        // })
+        // when component unmounts, disconnect
+        // console.log(chatInput, messages, 'messages?')
+
+        return (() => {
+            socket.disconnect()
+        })
 
     }, [minutes])
 
@@ -74,6 +91,8 @@ export default function CreateGameModal() {
         console.log(outputMinutes, increment, check, mode, 'before submit')
         console.log(sessionUser.username, color)
         dispatch(createMatch({ player1Username: sessionUser.username, player1Color: color, time: outputMinutes, increment, rated: check }))
+        socket.emit("chat", { seeking: true })
+        closeModal()
     }
 
     return (

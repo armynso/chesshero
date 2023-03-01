@@ -12,6 +12,7 @@ from .api.discourse_routes import discourse_routes
 from .api.match_routes import match_routes
 from .seeds import seed_commands
 from .config import Config
+from .socket import socketio
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -36,6 +37,7 @@ app.register_blueprint(discourse_routes, url_prefix='/api/discourses')
 app.register_blueprint(match_routes, url_prefix='/api/matches')
 db.init_app(app)
 Migrate(app, db)
+socketio.init_app(app)
 
 # Application Security
 CORS(app)
@@ -95,3 +97,6 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    socketio.run(app)

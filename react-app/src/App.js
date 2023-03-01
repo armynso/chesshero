@@ -11,6 +11,7 @@ import ForumCategory from "./components/ForumMain/ForumCat";
 import SingleForumPage from "./components/ForumMain/SingleForumPage";
 import EditForumPage from "./components/ForumMain/EditForumPage";
 import Lobby from "./components/Lobby";
+import Chesshero from "./components/Chesshero";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path='/'>
             <Lobby />
+          </Route>
+          <Route exact path='/temp'>
+            <Chesshero />
           </Route>
           <Route exact path='/forum/'>
             <Forum />
