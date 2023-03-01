@@ -2,22 +2,82 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { deleteMatch, getMatches } from '../../store/match';
-import { Chessboard } from 'kokopu-react';
+import { Chessboard, SquareMarkerIcon } from 'kokopu-react';
+import { Position } from 'kokopu';
 import { io } from 'socket.io-client';
 // import { createForum, getForums } from '../../../store/forum';
 import './chesshero.css'
 
 let socket;
 
+const position = new Position()
+
 export default function Chesshero() {
 
     const [theme, setTheme] = useState("original")
     const [pieces, setPieces] = useState("cburnett")
     const [boardsize, setBoardsize] = useState(82)
+    const [thisMove, setThisMove] = useState()
+    const [thisPosition, setThisPosition] = useState('start')
 
-    console.log(Chessboard.maxSquareSize(), Chessboard.minSquareSize())
+
+
+    // console.log(Chessboard.maxSquareSize(), Chessboard.minSquareSize())
 
     // console.log(boardsize, 'size')
+
+    // const currentPosition = () => {
+    //     // setThisPosition(position.fen())
+    //     return thisPosition
+    // }
+
+    let CurrentBoard = (a) => {
+        return (
+            <>
+                <Chessboard colorset={theme} pieceset={pieces} position={a.thisPosition} move={thisMove} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
+            </>
+        )
+    }
+
+
+    const handleMove = (m) => {
+        // console.log(m, 'mmmmmmMmmmmMmmmmM<mmmmmmmmmmmmmmMmmm')
+        // setThisMove(m)
+        // console.log(m, 'm', Object.keys(m).length === 0)
+        // if (thisPosition == 'start' && !m) {
+        //     console.log(m, 'test')
+        //     return (
+        //         <>
+        //             <Chessboard colorset={theme} pieceset={pieces} position={'start'} move={thisMove} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => HandleMove(move)} />
+        //         </>
+        //     )
+        // }
+
+        position.play(m)
+        // console.log(position.fen())
+        setThisPosition(() => position.fen())
+        // console.log(thisPosition, 'this position %')
+
+        // console.log(thisMove, 'move??? boss?????')
+
+
+        // return (
+        //     <>
+        //         <Chessboard colorset={theme} pieceset={pieces} position={position.fen()} move={thisMove} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => HandleMove(move)} />
+        //     </>
+        // )
+
+
+    }
+
+    // var handleMove
+
+    useEffect(() => {
+        // setThisPosition(position.fen())
+        console.log(thisPosition, 'useEffect')
+
+
+    }, [thisMove, thisPosition])
 
     const themeList = [
         {
@@ -134,8 +194,10 @@ export default function Chesshero() {
                     onChange={e => setBoardsize(Number(e.target.value))}
                 />
             </div>
-            <Chessboard colorset={theme} pieceset={pieces} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => (move)} />
+
+            <Chessboard colorset={theme} pieceset={pieces} position={thisPosition} move={thisMove} squareSize={boardsize} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
             {/* <Chessboard interactionMode="playMoves" position="rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" /> */}
+            {/* <CurrentBoard /> */}
         </>
     )
 }

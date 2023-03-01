@@ -47,7 +47,7 @@ export default function SingleForumPage() {
         const count = Math.floor(seconds / interval.seconds);
         return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
     }
-    console.log(discourses, thisForum, 'import')
+    // console.log(discourses, thisForum, 'import')
     const allComments = Array.isArray(discourses) ? discourses.filter(comment => comment.forumId == thisForum?.id).map(comment => {
         return (
             <div className='comment'>

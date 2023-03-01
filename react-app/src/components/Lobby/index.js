@@ -44,7 +44,7 @@ export default function Lobby() {
         socket.on("chat", (chat) => {
             console.log(chat, 'chat test')
             if (chat?.seeking == true) {
-                console.log('hello boss?')
+                // console.log('hello boss?')
                 dispatch(getMatches())
             }
             setMessages(messages => [...messages, chat])
@@ -63,7 +63,7 @@ export default function Lobby() {
 
     const sendChat = (e) => {
         e.preventDefault()
-        socket.emit("chat", { user: sessionUser.username, msg: chatInput });
+        socket.emit("chat", { user: sessionUser.username, msg: { chatInput } });
         setChatInput("")
     }
 

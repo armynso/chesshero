@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    elo = db.Column(db.Integer, nullable=True, default=1500)
+
     forums = db.relationship("Forum", back_populates="user")
     discourses = db.relationship("Discourse", back_populates="user")
 
