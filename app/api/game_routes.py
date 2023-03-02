@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Discourse, Forum, Match, db
-from app.forms import CreateForum, CreateDiscourse, CreateMatch
+from app.models import User, Game, Forum, Match, db
+from app.forms import CreateForum, CreateGame, EditGame
 
 game_routes = Blueprint('games', __name__)
 
@@ -37,8 +37,8 @@ def createGame(id):
             player1Time = form.data['player1Time'],
             player2Time = form.data['player2Time'],
             increment = form.data['increment'],
-            rated = form.data['rated']
-            player2Time = form.data['player2Time'],
+            rated = form.data['rated'],
+            player1Elo = form.data['player2Time'],
             player2Elo = form.data['player2Elo']
         )
 
@@ -51,3 +51,40 @@ def createGame(id):
         return game.to_dict(), 200
 
     return {'errors': form.errors  or 'Create Form Failed'}, 400
+
+
+@game_routes.route('/editGame/<int:id>', methods=['POST'])
+@login_required
+def editGame(id):
+    form = EditGame()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    oldGame = Game.query.get(id)
+
+    # player1 = db.Column(db.String, nullable=False)
+    # player2 = db.Column(db.String, nullable=False)
+    # player1Color = db.Column(db.String, nullable=False)
+    # player1Time = db.Column(db.Integer, nullable=False)
+    # player2Time = db.Column(db.Integer, nullable=False)
+    # increment = db.Column(db.Integer, nullable=False)
+    # rated = db.Column(db.Boolean, nullable=False, default=False)
+    # player1Elo = db.Column(db.Integer, nullable=False)
+    # player2Elo = db.Column(db.Integer, nullable=False)
+    # movesCount = db.Column(db.Integer, nullable=True, default=0)
+    # fen = db.Column(db.String, nullable=True, default='start')
+    # result = db.Column(db.String, nullable=True)
+    # lastMove = db.Column(db.String, nullable=True)
+
+    if form.validate_on_submit():
+        oldGame.player1Time = form.data['player1Time']
+        oldGame.player2Time = form.data['player2Time']
+        oldGame.movesCount = form.data['movesCount']
+        oldGame.fen = form.data['fen']
+        oldGame.lastMove = form.data['lastMove']
+        oldGame.result = form.data['result']
+
+        db.session.commit()
+
+        return oldGame.to_dict(), 200
+
+    return {'errors': validation_errors_to_error_messages(form.errors) or 'Edit Form Failed'}, 400
