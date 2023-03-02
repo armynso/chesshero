@@ -33,7 +33,7 @@ function App() {
           <Route exact path='/'>
             <Lobby />
           </Route>
-          <Route exact path='/temp'>
+          <Route exact path='/play'>
             <Chesshero />
           </Route>
           <Route exact path='/forum/'>

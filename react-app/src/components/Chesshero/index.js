@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { NavLink, Prompt, useHistory, useParams } from 'react-router-dom';
 import { deleteMatch, getMatches } from '../../store/match';
 import { Chessboard, SquareMarkerIcon } from 'kokopu-react';
 import { Position } from 'kokopu';
@@ -198,6 +198,10 @@ export default function Chesshero() {
             <Chessboard colorset={theme} pieceset={pieces} position={thisPosition} move={thisMove} squareSize={boardsize} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
             {/* <Chessboard interactionMode="playMoves" position="rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" /> */}
             {/* <CurrentBoard /> */}
+            <Prompt
+                when={true}
+                message='You will automatically surrender your game when you leave the page. Are you sure you want to leave :('
+            />
         </>
     )
 }

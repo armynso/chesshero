@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
 
     matches = db.relationship("Match", back_populates="user")
 
+
     @property
     def password(self):
         return self.hashed_password
@@ -37,5 +38,6 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'discourses': len(self.discourses)
+            'discourses': len(self.discourses),
+            'elo': self.elo
         }
