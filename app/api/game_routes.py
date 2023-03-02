@@ -38,7 +38,7 @@ def createGame(id):
             player2Time = form.data['player2Time'],
             increment = form.data['increment'],
             rated = form.data['rated'],
-            player1Elo = form.data['player2Time'],
+            player1Elo = form.data['player1Elo'],
             player2Elo = form.data['player2Elo']
         )
 

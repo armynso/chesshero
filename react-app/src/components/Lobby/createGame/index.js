@@ -13,7 +13,7 @@ import { io } from 'socket.io-client';
 
 let socket;
 
-export default function CreateGameModal() {
+export default function CreateGameModal({ props }) {
     const [header, setHeader] = useState("")
     const [content, setContent] = useState("")
     const [errors, setErrors] = useState([])
@@ -21,8 +21,11 @@ export default function CreateGameModal() {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
+    // console.log(props, 'this is props')
 
     const sessionUser = useSelector(state => state.session.user);
+    const seekers = Object.values(useSelector(state => state.match))[0];
+    const yourCreate = [seekers?.find(x => x?.player1Username == sessionUser?.username)]
     // const seekers = useSelector(state => state.matches);
 
     const [check, setCheck] = useState(false)
@@ -88,10 +91,14 @@ export default function CreateGameModal() {
     // rated = form.data['rated']
 
     const createGame = (color) => {
-        console.log(outputMinutes, increment, check, mode, 'before submit')
-        console.log(sessionUser.username, color)
+        if (yourCreate[0] !== undefined) {
+            closeModal()
+            return
+        }
+        // console.log(outputMinutes, increment, check, mode, 'before submit')
+        // console.log(sessionUser.username, color)
         dispatch(createMatch({ player1Username: sessionUser.username, player1Color: color, time: outputMinutes, increment, rated: check, player1Elo: sessionUser.elo }))
-        socket.emit("chat", { seeking: true })
+        socket.emit("chat", { seeking: true, skip: sessionUser.username })
         closeModal()
     }
 

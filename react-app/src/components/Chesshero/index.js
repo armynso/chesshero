@@ -73,7 +73,7 @@ export default function Chesshero() {
     }
 
     // var handleMove
-    console.log(games, 'games')
+    // console.log(games, 'games')
 
     useEffect(() => {
         // setThisPosition(position.fen())
@@ -202,7 +202,7 @@ export default function Chesshero() {
             {/* <Chessboard interactionMode="playMoves" position="rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" /> */}
             {/* <CurrentBoard /> */}
             <Prompt
-                when={true}
+                when={games?.length > 0}
                 message='You will automatically surrender your game when you leave the page. Are you sure you want to leave :('
             />
         </>

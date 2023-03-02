@@ -14,7 +14,7 @@ class Game(db.Model):
     player1Color = db.Column(db.String, nullable=False)
     player1Time = db.Column(db.Integer, nullable=False)
     player2Time = db.Column(db.Integer, nullable=False)
-    increment = db.Column(db.Integer, nullable=False)
+    increment = db.Column(db.Integer, nullable=False, default=0)
     rated = db.Column(db.Boolean, nullable=False, default=False)
     player1Elo = db.Column(db.Integer, nullable=False)
     player2Elo = db.Column(db.Integer, nullable=False)

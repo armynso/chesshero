@@ -42,28 +42,28 @@ export default function Lobby() {
         socket = io();
 
         socket.on("chat", (chat) => {
-            console.log(chat, 'chat test')
+            // console.log(chat, 'chat test')
             if (chat?.found == sessionUser.username) {
-                console.log('got in here? /////////////play')
+                // console.log('got in here? /////////////play')
                 return history.push('/play', { myColor: chat.player1Color })
             }
-            if (chat?.seeking == true) {
+            if (chat?.seeking == true && chat?.skip != sessionUser.username) {
                 // console.log('hello boss?')
                 dispatch(getMatches())
             }
-            setMessages(messages => [...messages, chat])
+            // setMessages(messages => [...messages, chat])
         })
 
         // when component unmounts, disconnect
-        console.log(chatInput, messages, 'messages?')
+        // console.log(chatInput, messages, 'messages?')
         return (() => {
             socket.disconnect()
         })
     }, [dispatch])
 
-    const updateChatInput = (e) => {
-        setChatInput(e.target.value)
-    };
+    // const updateChatInput = (e) => {
+    //     setChatInput(e.target.value)
+    // };
 
     const sendChat = (e) => {
         e.preventDefault()
@@ -71,24 +71,24 @@ export default function Lobby() {
         setChatInput("")
     }
 
-    const temp = () => {
-        return (
-            <div>
-                <div>
-                    {messages.map((message, ind) => (
-                        <div key={ind}>{`${message.user}: ${message.msg} ${message.seeking}`}</div>
-                    ))}
-                </div>
-                <form onSubmit={sendChat}>
-                    <input
-                        value={chatInput}
-                        onChange={updateChatInput}
-                    />
-                    <button type="submit">Send</button>
-                </form>
-            </div>
-        )
-    }
+    // const temp = () => {
+    //     return (
+    //         <div>
+    //             <div>
+    //                 {messages.map((message, ind) => (
+    //                     <div key={ind}>{`${message.user}: ${message.msg} ${message.seeking}`}</div>
+    //                 ))}
+    //             </div>
+    //             <form onSubmit={sendChat}>
+    //                 <input
+    //                     value={chatInput}
+    //                     onChange={updateChatInput}
+    //                 />
+    //                 <button type="submit">Send</button>
+    //             </form>
+    //         </div>
+    //     )
+    // }
 
 
 
@@ -104,7 +104,7 @@ export default function Lobby() {
 
     const startGame = (user) => {
         if (!sessionUser) return
-        console.log(user, 'user')
+        // console.log(user, 'user')
         const data = {
             player1: user.player1Username,
             player2: sessionUser.username,
@@ -112,18 +112,19 @@ export default function Lobby() {
             rated: user.rated,
             player1Time: +user.time * 60,
             player2Time: +user.time * 60,
-            increment: +user.increment,
+            increment: +user.increment || 0,
             player1Elo: user.player1Elo, //change this later
             player2Elo: +sessionUser.elo,
             id: user.id
         }
+        console.log(data, 'this is bad data')
         const player2Color = user.player1Color == 'black' ? 'white' : 'black';
         const check = dispatch(createGame(data))
             .catch(async (_req, res) => {
                 console.log('failed to create game')
                 return
             })
-        console.log({ found: user.player1Username, player1Color: user.player1Color })
+        // console.log({ found: user.player1Username, player1Color: user.player1Color })
         socket.emit("chat", { found: user.player1Username, player1Color: user.player1Color, seeking: true })
         return history.push('/play', { myColor: player2Color })
     }
@@ -155,12 +156,12 @@ export default function Lobby() {
 
     return (
         <>
-            {temp()}
+            {/* {temp()} */}
             {yourCreate[0] === undefined ?
                 <div className='createGameButton'>
                     <OpenModalButton
                         buttonText="CREATE A GAME"
-                        modalComponent={<CreateGameModal />}
+                        modalComponent={<CreateGameModal props={sessionUser.username} />}
                     />
                 </div>
                 : <><p className='waiting'>Waiting to Pair.<br></br>To cancel, please click your game in the table below</p></>}

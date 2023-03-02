@@ -29,6 +29,7 @@ def createMatch():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        print(current_user.elo, 'is there elo?', current_user)
         match = Match(
             user_id = current_user.id,
             player1Elo = current_user.elo,

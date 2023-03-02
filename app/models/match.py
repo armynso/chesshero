@@ -31,6 +31,7 @@ class Match(db.Model):
             'player1Username': self.player1Username,
             'player2Username': self.player2Username,
             'player1Color': self.player1Color,
+            'player1Elo': self.player1Elo,
             'time': self.time,
             'increment': self.increment,
             'rated': self.rated,
