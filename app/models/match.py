@@ -21,7 +21,7 @@ class Match(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
-
+ 
     user = db.relationship("User", back_populates="matches")
 
     def to_dict(self):

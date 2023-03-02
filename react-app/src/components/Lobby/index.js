@@ -27,6 +27,7 @@ export default function Lobby() {
     useEffect(() => {
         // const errs = []
         // console.log(seekers, 'seekers')
+        // (!sessionUser) dispatch(get)
         dispatch(getMatches())
     }, [dispatch])
 
@@ -161,7 +162,7 @@ export default function Lobby() {
                 <div className='createGameButton'>
                     <OpenModalButton
                         buttonText="CREATE A GAME"
-                        modalComponent={<CreateGameModal props={sessionUser.username} />}
+                        modalComponent={<CreateGameModal />}
                     />
                 </div>
                 : <><p className='waiting'>Waiting to Pair.<br></br>To cancel, please click your game in the table below</p></>}

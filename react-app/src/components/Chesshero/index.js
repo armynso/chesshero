@@ -7,7 +7,7 @@ import { Position } from 'kokopu';
 import { io } from 'socket.io-client';
 // import { createForum, getForums } from '../../../store/forum';
 import './chesshero.css'
-import { getGames } from '../../store/game';
+import { deleteGame, getGames } from '../../store/game';
 
 let socket;
 
@@ -79,7 +79,9 @@ export default function Chesshero() {
         // setThisPosition(position.fen())
         console.log(thisPosition, 'useEffect')
         dispatch(getGames())
-
+        // return (() => {
+        //     dispatch(deleteGame())
+        // })
     }, [thisMove, thisPosition])
 
     const themeList = [

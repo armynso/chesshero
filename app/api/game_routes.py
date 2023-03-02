@@ -88,3 +88,16 @@ def editGame(id):
         return oldGame.to_dict(), 200
 
     return {'errors': validation_errors_to_error_messages(form.errors) or 'Edit Form Failed'}, 400
+
+@game_routes.route('/deleteGame/<int:id>', methods=['DELETE'])
+@login_required
+def deleteGame(id):
+    thisGame = Game.query.get(id)
+
+    if not thisGame:
+        return {'Error': 'Match not Found'}, 404
+
+    db.session.delete(thisGame)
+    db.session.commit()
+
+    return {'Message': 'The Game has been deleted!'}, 200
