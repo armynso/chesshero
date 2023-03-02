@@ -7,6 +7,7 @@ import { Position } from 'kokopu';
 import { io } from 'socket.io-client';
 // import { createForum, getForums } from '../../../store/forum';
 import './chesshero.css'
+import { getGames } from '../../store/game';
 
 let socket;
 
@@ -14,6 +15,7 @@ const position = new Position()
 
 export default function Chesshero() {
 
+    const dispatch = useDispatch()
     const [theme, setTheme] = useState("original")
     const [pieces, setPieces] = useState("cburnett")
     const [boardsize, setBoardsize] = useState(82)
@@ -21,7 +23,7 @@ export default function Chesshero() {
     const [thisPosition, setThisPosition] = useState('start')
 
 
-
+    const games = Object.values(useSelector(state => state.game))[0];
     // console.log(Chessboard.maxSquareSize(), Chessboard.minSquareSize())
 
     // console.log(boardsize, 'size')
@@ -71,11 +73,12 @@ export default function Chesshero() {
     }
 
     // var handleMove
+    console.log(games, 'games')
 
     useEffect(() => {
         // setThisPosition(position.fen())
         console.log(thisPosition, 'useEffect')
-
+        dispatch(getGames())
 
     }, [thisMove, thisPosition])
 

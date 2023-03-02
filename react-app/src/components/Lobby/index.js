@@ -7,6 +7,7 @@ import CreateGameModal from './createGame';
 import { io } from 'socket.io-client';
 // import { createForum, getForums } from '../../../store/forum';
 import './lobby.css'
+import { createGame } from '../../store/game';
 
 let socket;
 
@@ -14,6 +15,7 @@ export default function Lobby() {
     const [header, setHeader] = useState("")
     const [content, setContent] = useState("")
     const dispatch = useDispatch()
+    const history = useHistory()
     // const [errors, setErrors] = useState([])
     // const [validationErrors, setValidationErrors] = useState([]);
     // const dispatch = useDispatch()
@@ -30,8 +32,6 @@ export default function Lobby() {
 
 
 
-
-
     const [chatInput, setChatInput] = useState("");
     const [messages, setMessages] = useState([]);
     // const user = useSelector(state => state.session.user)
@@ -43,6 +43,10 @@ export default function Lobby() {
 
         socket.on("chat", (chat) => {
             console.log(chat, 'chat test')
+            if (chat?.found == sessionUser.username) {
+                console.log('got in here? /////////////play')
+                return history.push('/play', { myColor: chat.player1Color })
+            }
             if (chat?.seeking == true) {
                 // console.log('hello boss?')
                 dispatch(getMatches())
@@ -90,7 +94,7 @@ export default function Lobby() {
 
 
 
-    const yourCreate = [seekers?.find(x => x.player1Username == sessionUser.username)]
+    const yourCreate = [seekers?.find(x => x?.player1Username == sessionUser?.username)]
     // console.log(yourCreate, 'my create')
 
     const deleteYourCreate = (id) => {
@@ -98,14 +102,40 @@ export default function Lobby() {
         socket.emit("chat", { seeking: true });
     }
 
+    const startGame = (user) => {
+        if (!sessionUser) return
+        console.log(user, 'user')
+        const data = {
+            player1: user.player1Username,
+            player2: sessionUser.username,
+            player1Color: user.player1Color,
+            rated: user.rated,
+            player1Time: +user.time * 60,
+            player2Time: +user.time * 60,
+            increment: +user.increment,
+            player1Elo: user.player1Elo, //change this later
+            player2Elo: +sessionUser.elo,
+            id: user.id
+        }
+        const player2Color = user.player1Color == 'black' ? 'white' : 'black';
+        const check = dispatch(createGame(data))
+            .catch(async (_req, res) => {
+                console.log('failed to create game')
+                return
+            })
+        console.log({ found: user.player1Username, player1Color: user.player1Color })
+        socket.emit("chat", { found: user.player1Username, player1Color: user.player1Color, seeking: true })
+        return history.push('/play', { myColor: player2Color })
+    }
 
-    const seekersList = seekers?.filter(x => x.player1Username != sessionUser?.username).map(x => {
 
-        const realName = 'pairLobby' + (x.player1Username == sessionUser.username ? " goGreen" : "");
+    const seekersList = seekers?.filter(x => x?.player1Username != sessionUser?.username).map(x => {
+
+        const realName = 'pairLobby' + (x?.player1Username == sessionUser?.username ? " goGreen" : "");
 
         return (
 
-            <tr className={realName}>
+            <tr className={realName} onClick={() => startGame(x)}>
                 <td>
                     {x.player1Username}
                 </td>

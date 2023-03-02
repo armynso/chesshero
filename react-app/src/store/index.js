@@ -4,12 +4,14 @@ import session from './session'
 import forum from './forum'
 import discourse from './discourse'
 import match from './match'
+import game from './game'
 
 const rootReducer = combineReducers({
   session,
   forum,
   discourse,
-  match
+  match,
+  game
 });
 
 

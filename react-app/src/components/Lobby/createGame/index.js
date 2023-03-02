@@ -90,7 +90,7 @@ export default function CreateGameModal() {
     const createGame = (color) => {
         console.log(outputMinutes, increment, check, mode, 'before submit')
         console.log(sessionUser.username, color)
-        dispatch(createMatch({ player1Username: sessionUser.username, player1Color: color, time: outputMinutes, increment, rated: check }))
+        dispatch(createMatch({ player1Username: sessionUser.username, player1Color: color, time: outputMinutes, increment, rated: check, player1Elo: sessionUser.elo }))
         socket.emit("chat", { seeking: true })
         closeModal()
     }

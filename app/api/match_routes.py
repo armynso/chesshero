@@ -31,6 +31,7 @@ def createMatch():
     if form.validate_on_submit():
         match = Match(
             user_id = current_user.id,
+            player1Elo = current_user.elo,
             player1Username = form.data['player1Username'],
             player1Color = form.data['player1Color'],
             time = form.data['time'],

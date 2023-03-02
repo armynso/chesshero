@@ -14,6 +14,7 @@ class Match(db.Model):
     player1Username = db.Column(db.String, nullable=False)
     player2Username = db.Column(db.String, nullable=True)
     player1Color = db.Column(db.String, nullable=False)
+    player1Elo = db.Column(db.Integer, nullable=False)
     time = db.Column(db.String, nullable=False)
     increment = db.Column(db.String, nullable=False)
     rated = db.Column(db.Boolean, nullable=False, default=False)
