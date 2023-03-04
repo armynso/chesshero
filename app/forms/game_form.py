@@ -10,7 +10,7 @@ class CreateGame(FlaskForm):
 
     player1Time = IntegerField("player1Time", validators=[DataRequired()])
     player2Time = IntegerField("player2Time", validators=[DataRequired()])
-    # increment = IntegerField("increment", validators=[DataRequired()])
+    increment = IntegerField("increment")
     rated = BooleanField("rated")
 
     player1Elo = IntegerField("player1Elo", validators=[DataRequired()])

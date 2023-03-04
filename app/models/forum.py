@@ -31,7 +31,7 @@ class Forum(db.Model):
             'category': self.category,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'username': self.user.to_dict()['username']
-            # 'discourse': self.discourse,
+            'username': self.user.to_dict()['username'],
+            'discourse': [d.to_dict() for d in self.discourses]
             # 'by_user': self.user
         }

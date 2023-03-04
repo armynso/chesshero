@@ -55,8 +55,8 @@ export default function Lobby() {
             // setMessages(messages => [...messages, chat])
         })
 
-        // when component unmounts, disconnect
         // console.log(chatInput, messages, 'messages?')
+        // when component unmounts, disconnect
         return (() => {
             socket.disconnect()
         })
@@ -158,7 +158,7 @@ export default function Lobby() {
     return (
         <>
             {/* {temp()} */}
-            {yourCreate[0] === undefined ?
+            {!sessionUser ? <><p className='waiting'>Please sign-in to create your game!</p></> : yourCreate[0] === undefined ?
                 <div className='createGameButton'>
                     <OpenModalButton
                         buttonText="CREATE A GAME"
