@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import { NavLink, Prompt, useHistory, useParams } from 'react-router-dom';
 import { deleteMatch, getMatches } from '../../store/match';
 import OpenModalButton from '../OpenModalButton';
 import CreateGameModal from './createGame';
@@ -44,12 +44,12 @@ export default function Lobby() {
 
         socket.on("chat", (chat) => {
             // console.log(chat, 'chat test')
-            if (chat?.found == sessionUser.username) {
+            if (chat?.found == sessionUser?.username) {
                 // console.log('got in here? /////////////play')
-                return history.push('/play', { myColor: chat.player1Color })
+                return history.push('/play', { myColor: chat.player1Color, maxTime: chat.maxTime, maxInc: chat.maxInc, isRated: chat.isRated })
             }
-            if (chat?.seeking == true && chat?.skip != sessionUser.username) {
-                // console.log('hello boss?')
+            if (chat?.seeking == true && chat?.skip != sessionUser?.username) {
+                console.log('hello boss?')
                 dispatch(getMatches())
             }
             // setMessages(messages => [...messages, chat])
@@ -59,8 +59,12 @@ export default function Lobby() {
         // when component unmounts, disconnect
         return (() => {
             socket.disconnect()
+            // if (yourCreate[0] !== undefined) {
+            //     dispatch(deleteMatch({ id: yourCreate[0].id }))
+            //     socket.emit("chat", { seeking: true })
+            // }
         })
-    }, [dispatch])
+    }, [dispatch, seekers])
 
     // const updateChatInput = (e) => {
     //     setChatInput(e.target.value)
@@ -126,8 +130,8 @@ export default function Lobby() {
                 return
             })
         // console.log({ found: user.player1Username, player1Color: user.player1Color })
-        socket.emit("chat", { found: user.player1Username, player1Color: user.player1Color, seeking: true })
-        return history.push('/play', { myColor: player2Color })
+        socket.emit("chat", { found: user.player1Username, player1Color: user.player1Color, seeking: true, maxTime: +user.time, maxInc: +user.increment, isRated: user.rated })
+        return history.push('/play', { myColor: player2Color, maxTime: +user.time, maxInc: +user.increment, isRated: user.rated })
     }
 
 
@@ -142,7 +146,7 @@ export default function Lobby() {
                     {x.player1Username}
                 </td>
                 <td>
-                    2115
+                    {x.player1Elo}
                 </td>
                 <td>
                     {x.time}{x.increment != '0' ? `+${x.increment}` : null}
@@ -187,7 +191,7 @@ export default function Lobby() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='pairLobby'>
+                        {/* <tr className='pairLobby'>
                             <td>
                                 Placeholder
                             </td>
@@ -200,7 +204,7 @@ export default function Lobby() {
                             <td>
                                 Rated
                             </td>
-                        </tr>
+                        </tr> */}
                         {yourCreate[0] !== undefined ? yourCreate?.map(x => {
 
                             return (
@@ -210,7 +214,7 @@ export default function Lobby() {
                                         {x.player1Username}
                                     </td>
                                     <td>
-                                        2115
+                                        {x.player1Elo}
                                     </td>
                                     <td>
                                         {x.time}{x.increment != '0' ? `+${x.increment}` : null}
@@ -228,6 +232,10 @@ export default function Lobby() {
                     </tbody>
                 </table>
             </div>
+            {/* <Prompt
+                when={yourCreate[0] !== undefined}
+                message={"Please cancel your game before you leave the page"}
+            /> */}
         </>
     )
 }

@@ -78,7 +78,7 @@ export default function Forum() {
                 <div></div>
                 <div className='forumUpper'>
                     <h1 className='forumHeader'>ChessHero Forum</h1>
-                    {/* <AddForumButton /> */} //add search here
+                    {/* <AddForumButton /> //add search here */}
                 </div>
                 <table>
                     <thead>

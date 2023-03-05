@@ -1,0 +1,74 @@
+.chessboard-main {
+    color: #ccc
+}
+
+.labels {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.labels>div {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.playerInfo {
+    /* display: flex; */
+    width: 250px;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.timeControl {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.isRated {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 24px;
+}
+
+.infoBoard {
+    display: flex;
+    margin: auto;
+
+    width: fit-content;
+}
+
+.elobox {
+    width: 250px;
+    height: 570px;
+    /* border: 15px solid green; */
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.elobox>div {
+    /* border: 6px solid rgb(121, 84, 255); */
+    background: rgba(0, 0, 0, 0.5);
+    height: 65px;
+    font-size: 24px;
+    border-radius: 6px;
+    min-width: 240px;
+}
+
+.elobox>div>div {
+    margin-left: 16px;
+}
