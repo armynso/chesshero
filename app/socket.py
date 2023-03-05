@@ -20,6 +20,10 @@ socketio = SocketIO(cors_allowed_origins=origins)
 def handle_chat(data):
     emit("chat", data, broadcast=True)
 
+@socketio.on("chatroom")
+def handle_chatroom(data):
+    emit("chatroom", data, broadcast=True)
+
 @socketio.on("join")
 def on_join(data):
     room = data['room']
@@ -30,6 +34,11 @@ def on_join(data):
 def on_move(data):
     room = data['room']
     send(data, room=room)
+
+# @socketio.on("chatroom")
+# def on_chatroom(data):
+#     room = data['room']
+#     send(data, room=room)
 
 @socketio.on("leave")
 def on_leave(data):

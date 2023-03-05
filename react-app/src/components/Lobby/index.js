@@ -70,11 +70,6 @@ export default function Lobby() {
     //     setChatInput(e.target.value)
     // };
 
-    const sendChat = (e) => {
-        e.preventDefault()
-        socket.emit("chat", { user: sessionUser.username, msg: { chatInput } });
-        setChatInput("")
-    }
 
     // const temp = () => {
     //     return (
@@ -169,7 +164,7 @@ export default function Lobby() {
                         modalComponent={<CreateGameModal />}
                     />
                 </div>
-                : <><p className='waiting'>Waiting to Pair.<br></br>To cancel, please click your game in the table below</p></>}
+                : <><p className='waiting'>Waiting to Pair.<br></br>To cancel, please click on your game in the table below</p></>}
 
             <div className='lobbyTable'>
 

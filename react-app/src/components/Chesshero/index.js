@@ -23,12 +23,17 @@ export default function Chesshero() {
     const [thisPosition, setThisPosition] = useState('start')
     const [thisGame, setThisGame] = useState(null)
 
+    const [chatInput, setChatInput] = useState("");
+    const [messages, setMessages] = useState([]);
+
     const [player1Color, setplayer1Color] = useState('')
     const [player2Color, setplayer2Color] = useState('')
     const [player1Name, setplayer1Name] = useState('')
     const [player2Name, setplayer2Name] = useState('')
     const [player1Elo, setplayer1Elo] = useState(0)
     const [player2Elo, setplayer2Elo] = useState(0)
+
+
 
     const sessionUser = useSelector(state => state.session.user);
     const games = Object.values(useSelector(state => state.game))[0];
@@ -41,42 +46,55 @@ export default function Chesshero() {
 
     useEffect(() => {
         console.log('how many')
-        if (Array.isArray(games)) {
-            socket = io()
-            console.log(games, 'this socket game')
-            // dispatch(getGames())
+        socket = io()
+        // if (Array.isArray(games)) {
+        //     console.log(games, 'this socket game')
+        //     // dispatch(getGames())
 
-            currentGame = games.slice(-1)[0]
-            // setThisGame(games?.slice(-1)[0])
-            setplayer1Color(currentGame.player1Color)
+        //     currentGame = games.slice(-1)[0]
+        //     // setThisGame(games?.slice(-1)[0])
+        //     setplayer1Color(currentGame.player1Color)
 
-            console.log('inside this game')
-            console.log({
-                room: currentGame.id,
-                player: sessionUser.username
-            }, 'right data?')
-            socket.emit("join", {
-                room: currentGame.id,
-                player: sessionUser.username
-            })
+        //     console.log('inside this game')
+        //     console.log({
+        //         room: currentGame.id,
+        //         player: sessionUser.username
+        //     }, 'right data?')
+        //     socket.emit("join", {
+        //         room: currentGame.id,
+        //         player: sessionUser.username
+        //     })
 
-            socket.on("move", (data) => {
-                console.log(data, 'data')
-                dispatch(getGames())
-            })
+        //     socket.on("move", (data) => {
+        //         console.log(data, 'just moved')
+        //         dispatch(getGames())
+        //     })
 
 
 
-            return (() => {
-                socket.disconnect()
-            })
-        }
+        //     return (() => {
+        //         socket.disconnect()
+        //     })
+        // }
+
+        socket.on("chatroom", (data) => {
+            console.log(data, 'message')
+            if (data.move) {
+                position.play(data.move)
+                const fen = position.fen()
+                setThisPosition(() => fen)
+            }
+            setMessages(messages => [...messages, data])
+        })
+        return (() => {
+            socket.disconnect()
+        })
 
     }, [dispatch, thisPosition])
 
 
-    console.log(games?.slice(-1)[0], 'games real')
-    console.log(thisGame, 'games real')
+    // console.log(games?.slice(-1)[0], 'games real')
+    // console.log(thisGame, 'games real')
 
     useEffect(() => {
         console.log('how many 2')
@@ -155,11 +173,12 @@ export default function Chesshero() {
         // console.log(thisPosition, 'this position %')
 
         console.log(m, 'boss', games?.slice(-1)[0].id)
-        socket.emit("move", {
-            move: m,
-            fen: fen,
-            room: games?.slice(-1)[0].id
-        })
+        // socket.emit("move", {
+        //     move: m,
+        //     fen: fen,
+        //     room: games?.slice(-1)[0].id
+        // })
+        socket.emit("chatroom", { move: m, fen: fen });
         // return (
         //     <>
         //         <Chessboard colorset={theme} pieceset={pieces} position={position.fen()} move={thisMove} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => HandleMove(move)} />
@@ -244,6 +263,30 @@ export default function Chesshero() {
         }
     ];
 
+    const sendChat = (e) => {
+        e.preventDefault()
+        socket.emit("chatroom", { user: sessionUser.username, msg: chatInput, room: currentGame.id });
+        setChatInput("")
+    }
+
+    const chatMessages = () => {
+        return (
+            <>
+                {messages.filter(x => [thisGame?.player1, thisGame?.player2].includes(x.user)).map((message, ind) => (
+                    <tr key={ind}>
+                        <td>
+                            [{message.user}]
+                        </td>
+                        <td>
+                            {message.msg}
+                        </td>
+                    </tr>
+                ))}
+
+            </>
+        )
+    }
+
     return (
         <><div className='chessboard-main'>
             {/* <h1>Let's jam</h1> */}
@@ -315,8 +358,28 @@ export default function Chesshero() {
                             {isRated ? 'Rated' : 'Casual'}
                         </div>
                     </div>
-                    <div>
-                        <h4>Chat Room</h4>
+                    <div className='chatRoom'>
+                        <h3>Chat Room!</h3>
+                        <hr></hr>
+                        <table>
+                            {/* <thead>
+                                <tr>
+                                    <th>Chat Room</th>
+                                </tr>
+                            </thead> */}
+                            <tbody>
+                                {chatMessages()}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className='chatInput'>
+                        <form onSubmit={sendChat}>
+                            <input
+                                value={chatInput}
+                                onChange={(e) => setChatInput(e.target.value)}
+                            />
+                            <button type="submit">Send</button>
+                        </form>
                     </div>
                 </div>
                 <Chessboard colorset={theme} pieceset={pieces} position={thisPosition} flipped={myColor == 'black'} move={thisMove} squareSize={boardsize} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
