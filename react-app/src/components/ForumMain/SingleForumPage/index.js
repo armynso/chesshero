@@ -17,12 +17,12 @@ export default function SingleForumPage() {
 
     const forums = Object.values(useSelector(state => state.forum))[0]
     const discourses = Object.values(useSelector(state => state.discourse))[0]
-    console.log(discourses, 'discourses ?')
+    // console.log(discourses, 'discourses ?')
 
     const sessionUser = useSelector(state => state.session.user);
 
     const { category, header } = useParams()
-    console.log(header, 'this is header')
+    // console.log(header, 'this is header')
 
 
     // console.log('test%20subject', decodeURI('test%20subject'))
@@ -97,6 +97,8 @@ export default function SingleForumPage() {
         if (check) setComment('')
     }
 
+    console.log(!!sessionUser, 'sessionUser')
+
     return (
         <>
             <div className='forumGroupSingleForum'>
@@ -121,11 +123,14 @@ export default function SingleForumPage() {
                 <div>
                     <form onSubmit={submit}>
                         <label className='commentLabel'>
-                            <div>Reply to this topic</div>
+                            {!sessionUser ? <div>Sign in to reply to this thread</div> :
+                                <div>Reply to this topic</div>
+                            }
                             <textarea
                                 type="text"
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
+                                disabled={!sessionUser}
                                 required
                             />
                         </label>

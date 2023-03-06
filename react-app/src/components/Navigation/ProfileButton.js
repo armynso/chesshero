@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import './profileButton.css'
+import { deleteMatch } from "../../store/match";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -30,8 +31,12 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+  const seeker = Object.values(useSelector(state => state.match))[0]?.find(x => x.username);
+  // console.log(seeker)
   const handleLogout = (e) => {
     e.preventDefault();
+    if (seeker) dispatch(deleteMatch({ id: seeker.id }))
+
     dispatch(logout());
   };
 

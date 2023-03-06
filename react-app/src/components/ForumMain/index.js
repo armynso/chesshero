@@ -19,24 +19,58 @@ export function AddForumButton({ category }) {
 
 export default function Forum() {
     const dispatch = useDispatch()
-    const [topic1, settopic1] = useState('')
+    const [topic1, settopic1] = useState(0)
+    const [topic2, settopic2] = useState(0)
+    const [topic3, settopic3] = useState(0)
+    const [topic4, settopic4] = useState(0)
+    const [last1, setlast1] = useState(0)
+    const [last2, setlast2] = useState(0)
+    const [last3, setlast3] = useState(0)
+    const [last4, setlast4] = useState(0)
+    const [post1, setpost1] = useState(0)
+    const [post2, setpost2] = useState(0)
+    const [post3, setpost3] = useState(0)
+    const [post4, setpost4] = useState(0)
 
     const forums = Object.values(useSelector(state => state.forum))[0]
 
     const sessionUser = useSelector(state => state.session.user);
 
-    console.log('meow', forums || 'hi')
+    // console.log('meow', forums || 'hi')
     // console.log(forums[0], '0')
 
+    const countPosts = (n, cat) => {
+        if (n == 0) return 0
+        let num = 0
+        const list = forums?.filter(x => x.category == cat)
+        return list?.reduce((acc, curr) => {
+            return acc + curr.discourse.length + 1
+        }, 0)
+    }
 
     useEffect(() => {
         if (!forums) {
             dispatch(getForums())
         }
-        settopic1(forums?.filter(x => x.category == 'general-chess-discussion').length)
+        const topic1len = forums?.filter(x => x.category == 'general-chess-discussion').length
+        const topic2len = forums?.filter(x => x.category == 'chesshero-feedback').length
+        const topic3len = forums?.filter(x => x.category == 'game-analysis').length
+        const topic4len = forums?.filter(x => x.category == 'off-topic-discussion').length
+        settopic1(topic1len)
+        settopic2(topic2len)
+        settopic3(topic3len)
+        settopic4(topic4len)
+        setlast1(topic1len > 0 ? (forums?.filter(x => x.category == 'general-chess-discussion')).slice(-1)[0].username : 'Nobody')
+        setlast2(topic2len > 0 ? (forums?.filter(x => x.category == 'chesshero-feedback')).slice(-1)[0].username : 'Nobody')
+        setlast3(topic3len > 0 ? (forums?.filter(x => x.category == 'game-analysis')).slice(-1)[0].username : 'Nobody')
+        setlast4(topic4len > 0 ? (forums?.filter(x => x.category == 'off-topic-discussion')).slice(-1)[0].username : 'Nobody')
+        setpost1(countPosts(topic1len, 'general-chess-discussion'))
+        setpost2(countPosts(topic2len, 'chesshero-feedback'))
+        setpost3(countPosts(topic3len, 'game-analysis'))
+        setpost4(countPosts(topic4len, 'off-topic-discussion'))
     }, [dispatch, forums])
 
-    console.log(topic1, 'topic 1')
+    // console.log(topic1, 'topic 1')
 
     return (
         <>
@@ -44,7 +78,7 @@ export default function Forum() {
                 <div></div>
                 <div className='forumUpper'>
                     <h1 className='forumHeader'>ChessHero Forum</h1>
-                    {/* <AddForumButton /> */} //add search here
+                    {/* <AddForumButton /> //add search here */}
                 </div>
                 <table>
                     <thead>
@@ -74,10 +108,10 @@ export default function Forum() {
                                 {topic1}
                             </td>
                             <td>
-                                12345
+                                {post1}
                             </td>
                             <td>
-                                armynso
+                                {last1}
                             </td>
                         </tr>
                         <tr>
@@ -89,13 +123,13 @@ export default function Forum() {
                                 <p>Bug reports, feature requests, suggestions</p>
                             </td>
                             <td>
-                                123
+                                {topic2}
                             </td>
                             <td>
-                                12345
+                                {post2}
                             </td>
                             <td>
-                                armynso
+                                {last2}
                             </td>
                         </tr>
                         <tr>
@@ -108,13 +142,13 @@ export default function Forum() {
                                 <p>Show your game and analyse it with the community</p>
                             </td>
                             <td>
-                                123
+                                {topic3}
                             </td>
                             <td>
-                                12345
+                                {post3}
                             </td>
                             <td>
-                                armynso
+                                {last3}
                             </td>
                         </tr>
                         <tr>
@@ -125,13 +159,13 @@ export default function Forum() {
                                 <p>Everything that isn't related to chess</p>
                             </td>
                             <td>
-                                123
+                                {topic4}
                             </td>
                             <td>
-                                12345
+                                {post4}
                             </td>
                             <td>
-                                armynso
+                                {last4}
                             </td>
                         </tr>
                     </tbody>

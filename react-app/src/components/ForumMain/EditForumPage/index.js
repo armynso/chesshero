@@ -15,7 +15,7 @@ export default function EditForumPage() {
     // console.log(location.state)
 
     const { id: oldId, category: oldCategory, content: oldContent, header: oldHeader } = location.state.thisForum
-    console.log(oldId, oldContent, oldCategory, oldHeader)
+    // console.log(oldId, oldContent, oldCategory, oldHeader)
 
     const [header, setHeader] = useState(oldHeader)
     const [content, setContent] = useState(oldContent)
@@ -51,7 +51,8 @@ export default function EditForumPage() {
     }, [header, content, setValidationErrors])
 
     const maxLength = 52
-    console.log(header, 'what is header')
+    const maxContent = 250
+    // console.log(header, 'what is header')
     return (
         <>
             <div className='create-form-main'>
@@ -85,9 +86,11 @@ export default function EditForumPage() {
                             type="text"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
+                            maxLength='250'
                             // placeholder={oldContent}
                             required
                         />
+                        <div>Characters left: {maxContent - content.length}</div>
                     </label>
                     {!!validationErrors.length && (
                         <div style={{ textAlign: 'center' }}>

@@ -53,6 +53,12 @@ def editForums(id):
 
     oldForum = Forum.query.get(id)
 
+    if oldForum.header == form.data['header']:
+        oldForum.content = form.data['content']
+
+        db.session.commit()
+        return oldForum.to_dict(), 200
+
     if form.validate_on_submit():
         oldForum.header = form.data['header']
         oldForum.content = form.data['content']

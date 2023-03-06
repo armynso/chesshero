@@ -32,7 +32,7 @@ export default function CreateForumPage() {
 
             })
         // console.log('history dot push?')
-        console.log(check, 'checky')
+        // console.log(check, 'checky')
         if (check) return history.push(`/forum/${category}`);
     }
 
@@ -48,6 +48,7 @@ export default function CreateForumPage() {
         }
     }
     const maxLength = 52
+    const maxContent = 250
     return (
         <>
             <div className='create-form-main'>
@@ -80,8 +81,10 @@ export default function CreateForumPage() {
                             type="text"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
+                            maxLength='250'
                             required
                         />
+                        <div>Characters left: {maxContent - content.length}</div>
                     </label>
                     {!!validationErrors.length && (
                         <div style={{ textAlign: 'center' }}>

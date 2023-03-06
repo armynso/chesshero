@@ -1,0 +1,183 @@
+.chessboard-main {
+    color: #ccc
+}
+
+.labels {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.labels select {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ccc;
+}
+
+.labels>div {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.playerInfo {
+    /* display: flex; */
+    width: 260px;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.timeControl {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.isRated {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 24px;
+}
+
+.infoBoard {
+    display: flex;
+    margin: auto;
+
+    width: fit-content;
+}
+
+.elobox {
+    width: 250px;
+    height: 570px;
+    /* border: 15px solid green; */
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.elobox>div {
+    /* border: 6px solid rgb(121, 84, 255); */
+    background: rgba(0, 0, 0, 0.5);
+    height: 65px;
+    font-size: 24px;
+    border-radius: 6px;
+    min-width: 240px;
+}
+
+.elobox>div>div {
+    margin-left: 16px;
+}
+
+.chatRoom h3 {
+    padding-top: 0px;
+    margin-bottom: 1px;
+}
+
+.chatRoom hr {
+    border: none;
+    border-top: 3px double #ccc;
+    color: #ccc;
+    /* overflow: visible; */
+    text-align: center;
+    height: 5px;
+}
+
+.chatRoom {
+    text-align: center;
+    /* border: 2px; */
+    background: rgba(0, 0, 0, 0.6);
+    width: 280px;
+    /* height: 120px; */
+    /* height: 540px; */
+    height: 480px;
+    margin: auto;
+    color: #cccccc;
+    border-radius: 6px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scrollbar-color: rebeccapurple green;
+    position: relative;
+}
+
+
+.chatRoom table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.chatRoom td:first-child {
+    width: 84px;
+    /* text-align: top; */
+    vertical-align: top;
+    /* text-align: right; */
+}
+
+.chatRoom td:last-child {
+    text-align: left;
+    height: auto;
+}
+
+.chatRoom tbody {
+    font-size: 14px;
+}
+
+.chatRoom thead tr {
+    background: rgba(0, 0, 0, 0.20);
+    height: 24px;
+}
+
+.chatInput {
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* align-items: center; */
+    margin-left: 18px;
+}
+
+.chatInput input {
+    width: 224px;
+    background-color: rgba(0, 0, 0, 0.20);
+    color: #ccc;
+}
+
+.chatInput button {
+    border-color: rgb(69, 255, 178);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.20);
+    color: #ccc;
+}
+
+* {
+    scrollbar-width: none;
+    scrollbar-color: #57aeff rgba(0, 0, 0, 0.20);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.20);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #57aeff;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+}
+
+.blockTurn {
+    pointer-events: none;
+}
