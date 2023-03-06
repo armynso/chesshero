@@ -80,7 +80,7 @@ export default function Chesshero() {
         // }
 
         socket.on("chatroom", (data) => {
-            console.log(data, 'message')
+            // console.log(data, 'message')
             console.log(roomid, 'roomid')
             if (data.move && data.roomid == roomid) {
                 // position.moves(data.move)
@@ -102,10 +102,10 @@ export default function Chesshero() {
     // console.log(thisGame, 'games real')
 
     useEffect(() => {
-        console.log('how many 2')
+        // console.log('how many 2')
         // setThisPosition(position.fen())
-        console.log(thisPosition, 'useEffect')
-        console.log(thisGame, 'this  game2')
+        // console.log(thisPosition, 'useEffect')
+        // console.log(thisGame, 'this  game2')
         if (Array.isArray(games)) {
             currentGame = games.slice(-1)[0]
             setThisGame(games?.slice(-1)[0])
@@ -118,7 +118,7 @@ export default function Chesshero() {
             setroomid(currentGame.id)
         }
         if (!thisGame) {
-            console.log(thisGame, '88')
+            // console.log(thisGame, '88')
             dispatch(getGames())
         }
 
@@ -180,7 +180,7 @@ export default function Chesshero() {
 
         const currentGame = games?.slice(-1)[0]
 
-        console.log(m, 'boss', games?.slice(-1)[0].id)
+        // console.log(m, 'boss', games?.slice(-1)[0].id)
         // socket.emit("move", {
         //     move: m,
         //     fen: fen,

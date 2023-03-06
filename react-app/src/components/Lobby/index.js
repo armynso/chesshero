@@ -40,30 +40,32 @@ export default function Lobby() {
     useEffect(() => {
         // open socket connection
         // create websocket
-        socket = io();
+        if (sessionUser) {
+            socket = io();
 
-        socket.on("chat", (chat) => {
-            // console.log(chat, 'chat test')
-            if (chat?.found == sessionUser?.username) {
-                // console.log('got in here? /////////////play')
-                return history.push('/play', { myColor: chat.player1Color, maxTime: chat.maxTime, maxInc: chat.maxInc, isRated: chat.isRated })
-            }
-            if (chat?.seeking == true && chat?.skip != sessionUser?.username) {
-                console.log('hello boss?')
-                dispatch(getMatches())
-            }
-            // setMessages(messages => [...messages, chat])
-        })
+            socket.on("chat", (chat) => {
+                // console.log(chat, 'chat test')
+                if (chat?.found == sessionUser?.username) {
+                    // console.log('got in here? /////////////play')
+                    return history.push('/play', { myColor: chat.player1Color, maxTime: chat.maxTime, maxInc: chat.maxInc, isRated: chat.isRated })
+                }
+                if (chat?.seeking == true && chat?.skip != sessionUser?.username) {
+                    console.log('hello boss?')
+                    dispatch(getMatches())
+                }
+                // setMessages(messages => [...messages, chat])
+            })
 
-        // console.log(chatInput, messages, 'messages?')
-        // when component unmounts, disconnect
-        return (() => {
-            socket.disconnect()
-            // if (yourCreate[0] !== undefined) {
-            //     dispatch(deleteMatch({ id: yourCreate[0].id }))
-            //     socket.emit("chat", { seeking: true })
-            // }
-        })
+            // console.log(chatInput, messages, 'messages?')
+            // when component unmounts, disconnect
+            return (() => {
+                socket.disconnect()
+                // if (yourCreate[0] !== undefined) {
+                //     dispatch(deleteMatch({ id: yourCreate[0].id }))
+                //     socket.emit("chat", { seeking: true })
+                // }
+            })
+        }
     }, [dispatch, seekers])
 
     // const updateChatInput = (e) => {
@@ -103,7 +105,7 @@ export default function Lobby() {
     }
 
     const startGame = (user) => {
-        if (!sessionUser) return
+        if (!sessionUser) return 'test'
         // console.log(user, 'user')
         const data = {
             player1: user.player1Username,
@@ -157,7 +159,7 @@ export default function Lobby() {
     return (
         <>
             {/* {temp()} */}
-            {!sessionUser ? <><p className='waiting'>Please sign-in to create your game!</p></> : yourCreate[0] === undefined ?
+            {!sessionUser ? <><p className='waiting'>Please sign-in to create your game or join a game!</p></> : yourCreate[0] === undefined ?
                 <div className='createGameButton'>
                     <OpenModalButton
                         buttonText="CREATE A GAME"
@@ -221,7 +223,7 @@ export default function Lobby() {
 
                             )
                         }) : null}
-                        {seekersList}
+                        {sessionUser ? seekersList : null}
 
 
                     </tbody>
