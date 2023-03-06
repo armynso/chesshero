@@ -3,6 +3,7 @@ import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { getMatches } from "../../store/match";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function LoginFormModal() {
       setErrors(data);
     } else {
       closeModal()
+      dispatch(getMatches())
     }
   };
 
