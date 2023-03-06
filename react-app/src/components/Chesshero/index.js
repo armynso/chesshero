@@ -33,7 +33,9 @@ export default function Chesshero() {
     const [player1Elo, setplayer1Elo] = useState(0)
     const [player2Elo, setplayer2Elo] = useState(0)
 
+    const [roomid, setroomid] = useState(0)
 
+    const [turn, setturn] = useState(position.turn())
 
     const sessionUser = useSelector(state => state.session.user);
     const games = Object.values(useSelector(state => state.game))[0];
@@ -45,9 +47,9 @@ export default function Chesshero() {
     let currentGame = {}
 
     useEffect(() => {
-        console.log('how many')
+        // console.log('how many')
         socket = io()
-        // if (Array.isArray(games)) {
+        // if (Array.isArray(games)) setroomid(games?.slice(-1)[0].id)
         //     console.log(games, 'this socket game')
         //     // dispatch(getGames())
 
@@ -79,10 +81,13 @@ export default function Chesshero() {
 
         socket.on("chatroom", (data) => {
             console.log(data, 'message')
-            if (data.move) {
+            console.log(roomid, 'roomid')
+            if (data.move && data.roomid == roomid) {
+                // position.moves(data.move)
                 position.play(data.move)
                 const fen = position.fen()
                 setThisPosition(() => fen)
+                setturn(data.turn)
             }
             setMessages(messages => [...messages, data])
         })
@@ -90,7 +95,7 @@ export default function Chesshero() {
             socket.disconnect()
         })
 
-    }, [dispatch, thisPosition])
+    }, [dispatch, thisPosition, games])
 
 
     // console.log(games?.slice(-1)[0], 'games real')
@@ -110,6 +115,7 @@ export default function Chesshero() {
             setplayer2Name(currentGame.player2)
             setplayer1Elo(currentGame.player1Elo)
             setplayer2Elo(currentGame.player2Elo)
+            setroomid(currentGame.id)
         }
         if (!thisGame) {
             console.log(thisGame, '88')
@@ -172,13 +178,19 @@ export default function Chesshero() {
         // setThisMove(() => m)
         // console.log(thisPosition, 'this position %')
 
+        const currentGame = games?.slice(-1)[0]
+
         console.log(m, 'boss', games?.slice(-1)[0].id)
         // socket.emit("move", {
         //     move: m,
         //     fen: fen,
         //     room: games?.slice(-1)[0].id
         // })
-        socket.emit("chatroom", { move: m, fen: fen });
+
+        // const otherUser = currentGame.player1Name == sessionUser.username ? currentGame.player2Name : currentGame.player1Name
+        const turnColor = position.turn()
+        setturn(turnColor)
+        socket.emit("chatroom", { move: m, fen: fen, roomid: currentGame.id, turn: turnColor });
         // return (
         //     <>
         //         <Chessboard colorset={theme} pieceset={pieces} position={position.fen()} move={thisMove} squareSize={boardsize} animated={true} interactionMode="playMoves" onMovePlayed={move => HandleMove(move)} />
@@ -287,6 +299,12 @@ export default function Chesshero() {
         )
     }
 
+    const thisPlayerColor = thisGame?.player1 == sessionUser.username ? thisGame?.player1Color == 'white' ? 'w' : 'b' : thisGame?.player1Color == 'white' ? 'b' : 'w'
+
+    // console.log(thisPlayerColor, thisGame?.player1, thisGame?.player1Color, turn, 'turn')
+
+    const blockingTurn = thisPlayerColor != turn ? 'blockTurn' : null;
+
     return (
         <><div className='chessboard-main'>
             {/* <h1>Let's jam</h1> */}
@@ -382,7 +400,9 @@ export default function Chesshero() {
                         </form>
                     </div>
                 </div>
-                <Chessboard colorset={theme} pieceset={pieces} position={thisPosition} flipped={myColor == 'black'} move={thisMove} squareSize={boardsize} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
+                <div className={blockingTurn}>
+                    <Chessboard colorset={theme} pieceset={pieces} position={thisPosition} flipped={myColor == 'black'} move={thisMove} squareSize={boardsize} interactionMode="playMoves" onMovePlayed={move => handleMove(move)} />
+                </div>
                 {/* <Chessboard interactionMode="playMoves" position="rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" /> */}
                 {/* <CurrentBoard /> */}
                 <div className='elobox'>

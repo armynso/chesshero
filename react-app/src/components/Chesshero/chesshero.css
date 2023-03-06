@@ -176,5 +176,8 @@
     background-color: #57aeff;
     border-radius: 10px;
     border: 1px solid #ffffff;
+}
 
+.blockTurn {
+    pointer-events: none;
 }
