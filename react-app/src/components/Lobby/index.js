@@ -117,7 +117,7 @@ export default function Lobby() {
             player2Elo: +sessionUser.elo,
             id: user.id
         }
-        console.log(data, 'this is bad data')
+        // console.log(data, 'this is bad data')
         const player2Color = user.player1Color == 'black' ? 'white' : 'black';
         const check = dispatch(createGame(data))
             .catch(async (_req, res) => {

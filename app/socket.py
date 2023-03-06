@@ -4,10 +4,7 @@ import os
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
-    origins = [
-        'http://https://chesshero.onrender.com',
-        'https://https://chesshero.onrender.com'
-    ]
+    origins = "*"
 else:
     origins = "*"
 
